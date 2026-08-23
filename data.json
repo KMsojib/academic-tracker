@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478759553",
+      "name": "Sahidul Islam",
+      "university": "Kennessaw State Unviersity",
+      "email": "sislam19@kennesaw.edu",
+      "department": "Computer Science",
+      "interests": "optimizing memory, computation, and energy efficiency in resource-constrained environments",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://jamy54.github.io/",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478636153",
       "name": "Shishir K. Shah",
       "university": "University of Houston",
