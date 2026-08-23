@@ -15,39 +15,19 @@
             darkMode: 'class',
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0f7ff',
-                            100: '#e0effe',
-                            500: '#3b82f6',
-                            600: '#2563eb',
-                            700: '#1d4ed8',
-                            900: '#1e3a8a',
-                        }
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { brand: { 50: '#f0f7ff', 100: '#e0effe', 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8', 900: '#1e3a8a' } }
                 }
             }
         }
     </script>
     <style>
-        /* Custom scrollbar styling */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: #f1f5f9; }
         .dark ::-webkit-scrollbar-track { background: #0f172a; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        .badge-pulse {
-            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        @keyframes pulse-ring {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
     </style>
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen font-sans transition-colors duration-200">
@@ -83,8 +63,12 @@
                 </button>
             </div>
 
-            <!-- Top Actions & Privacy Controls -->
+            <!-- Sync & Data Controls -->
             <div class="flex items-center space-x-2 sm:space-x-3">
+                <button onclick="openSyncModal()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1.5 shadow-sm" title="Configure GitHub Sync">
+                    <i class="fa-solid fa-rotate"></i>
+                    <span class="hidden sm:inline">⚙ Sync Settings</span>
+                </button>
                 <button onclick="exportDataJSON()" class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5" title="Export Full Database JSON">
                     <i class="fa-solid fa-download text-blue-500"></i>
                     <span class="hidden sm:inline">Export JSON</span>
@@ -168,7 +152,7 @@
 
                     <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-lg self-start lg:self-auto border border-slate-200 dark:border-slate-700">
                         <button id="btnViewGrouped" onclick="switchView('grouped')" class="px-3 py-1.5 rounded-md text-xs font-semibold transition flex items-center gap-1.5 bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
-                            <i class="fa-solid fa-layer-group"></i> Grouped by University
+                            <i class="fa-solid fa-layer-group"></i> Grouped View
                         </button>
                         <button id="btnViewTable" onclick="switchView('table')" class="px-3 py-1.5 rounded-md text-xs font-semibold transition flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
                             <i class="fa-solid fa-table"></i> All Table View
@@ -244,7 +228,7 @@
             <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="relative flex-1 w-full">
                     <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" id="uniSearchInput" oninput="renderUniversityTrack()" placeholder="Search university, requirements, notes..." 
+                    <input type="text" id="uniSearchInput" oninput="renderUniversityTrack()" placeholder="Search university, requirements..." 
                         class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="flex items-center space-x-3 w-full md:w-auto">
@@ -262,7 +246,6 @@
                     </button>
                 </div>
             </div>
-
             <div id="uniTrackContainer" class="space-y-4"></div>
         </div>
 
@@ -271,7 +254,7 @@
             <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="relative flex-1 w-full">
                     <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" id="schSearchInput" oninput="renderScholarshipTrack()" placeholder="Search scholarship, coverage, country..." 
+                    <input type="text" id="schSearchInput" oninput="renderScholarshipTrack()" placeholder="Search scholarship..." 
                         class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="flex items-center space-x-3 w-full md:w-auto">
@@ -289,13 +272,114 @@
                     </button>
                 </div>
             </div>
-
             <div id="schTrackContainer" class="space-y-4"></div>
         </div>
 
     </main>
 
-    <!-- University Entry Modal -->
+    <!-- PROFESSOR ENTRY MODAL -->
+    <div id="profModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-8">
+            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <h3 id="profModalTitle" class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-blue-500"></i>
+                    <span>Add New Professor Profile</span>
+                </h3>
+                <button onclick="closeProfModal()" class="text-slate-400 hover:text-slate-600 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="profForm" onsubmit="handleProfSubmit(event)" class="p-6 space-y-4 text-xs sm:text-sm">
+                <input type="hidden" id="editProfId" value="">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium mb-1">Professor Name *</label>
+                        <input type="text" id="profName" required placeholder="e.g. Dr. Andrew Ng" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">University *</label>
+                        <input type="text" id="profUniversity" required placeholder="e.g. Stanford University" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium mb-1">Email Address</label>
+                        <input type="email" id="profEmail" placeholder="e.g. ang@stanford.edu" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Department / Field</label>
+                        <input type="text" id="profDepartment" placeholder="e.g. Computer Science" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium mb-1">Research Interests / Topics</label>
+                    <input type="text" id="profInterests" placeholder="e.g. Deep Learning, Medical Imaging, AI Safety" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div>
+                        <label class="block font-medium mb-1">Target Intake</label>
+                        <select id="profIntake" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="Fall 2025">Fall 2025</option>
+                            <option value="Spring 2026">Spring 2026</option>
+                            <option value="Fall 2026">Fall 2026</option>
+                            <option value="Spring 2027">Spring 2027</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Has Openings?</label>
+                        <select id="profOpening" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="Yes">Yes (Hiring)</option>
+                            <option value="No">No</option>
+                            <option value="Unknown">Unknown</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Status</label>
+                        <select id="profResponse" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="Not Sent Yet">Not Sent Yet</option>
+                            <option value="Mail Sent">Mail Sent</option>
+                            <option value="Follow-up Sent">Follow-up Sent</option>
+                            <option value="Positive Response">Positive Response 🎉</option>
+                            <option value="Interview Scheduled">Interview Scheduled 📅</option>
+                            <option value="Negative / Full">Negative / Full</option>
+                            <option value="No Response / Ghosted">No Response</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Profile Viewed?</label>
+                        <select id="profProfileViewed" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="No">No</option>
+                            <option value="Yes">Yes</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-medium mb-1">Faculty / Lab Website URL</label>
+                        <input type="url" id="profWebsite" placeholder="https://cs.stanford.edu/~faculty" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Recent Paper Title / Key Work</label>
+                        <input type="text" id="profPaper" placeholder="e.g. Attention Is All You Need (2017)" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium mb-1">Custom Notes / Application Strategy</label>
+                    <textarea id="profNotes" rows="2" placeholder="Mentioned lab opening on Twitter, customize paper citation in intro..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-white"></textarea>
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-2">
+                    <button type="button" onclick="closeProfModal()" class="px-4 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700">Save Professor Profile</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- UNIVERSITY ENTRY MODAL -->
     <div id="uniModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-8">
             <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
@@ -383,7 +467,7 @@
         </div>
     </div>
 
-    <!-- Scholarship Entry Modal -->
+    <!-- SCHOLARSHIP ENTRY MODAL -->
     <div id="schModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-8">
             <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
@@ -466,7 +550,7 @@
         </div>
     </div>
 
-    <!-- Email Draft Composer Modal -->
+    <!-- EMAIL DRAFT COMPOSER MODAL -->
     <div id="emailComposerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
         <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-8">
             <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
@@ -510,7 +594,48 @@
         </div>
     </div>
 
-    <!-- Custom Notification Toast -->
+    <!-- GITHUB SYNC MODAL -->
+    <div id="syncModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-md shadow-2xl p-6 space-y-4">
+            <div class="flex items-center justify-between border-b pb-3 border-slate-200 dark:border-slate-800">
+                <h3 class="font-bold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-rotate text-emerald-500"></i>
+                    <span>GitHub Real-time Sync Configuration</span>
+                </h3>
+                <button onclick="closeSyncModal()" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="syncForm" onsubmit="saveSyncConfig(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-medium mb-1">GitHub Username *</label>
+                    <input type="text" id="ghUsername" required placeholder="kmsojib" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block font-medium mb-1">Repository Name *</label>
+                    <input type="text" id="ghRepo" required placeholder="academic-tracker" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2">
+                </div>
+                <div>
+                    <label class="block font-medium mb-1">Personal Access Token (PAT) *</label>
+                    <input type="password" id="ghToken" required placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2">
+                </div>
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block font-medium mb-1">File Path</label>
+                        <input type="text" id="ghPath" value="data.json" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Branch</label>
+                        <input type="text" id="ghBranch" value="main" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2">
+                    </div>
+                </div>
+                <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-2">
+                    <button type="button" onclick="closeSyncModal()" class="px-3 py-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+                    <button type="submit" class="px-4 py-1.5 rounded bg-emerald-600 text-white font-bold">Save & Sync Connection</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
     <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-800">
         <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
         <span id="toastMessage" class="text-xs sm:text-sm font-medium">Notification message</span>
@@ -518,9 +643,63 @@
 
     <script>
         let activeMainTab = 'prof'; // 'prof', 'uni', 'sch'
+        let currentProfView = 'grouped'; // 'grouped', 'table', 'kanban'
+        let currentComposerProfId = null;
+        let fileSha = null;
 
-        // Demo Data for University Track
-        let universitiesData = [
+        // Default Data Sets
+        let defaultProfessors = [
+            {
+                id: 'prof-1',
+                name: 'Dr. Andrew Ng',
+                university: 'Stanford University',
+                email: 'ang@cs.stanford.edu',
+                department: 'Computer Science & AI Lab',
+                interests: 'Deep Learning, Machine Learning, Computer Vision',
+                intake: 'Fall 2026',
+                hasOpening: 'Yes',
+                responseStatus: 'Positive Response',
+                profileViewed: 'Yes',
+                website: 'https://cs.stanford.edu/~ang',
+                recentPaper: 'Learning Deep Representations for Robotics',
+                dateSent: '2026-02-10',
+                notes: 'Very encouraging response. Mentioned taking new PhD students.'
+            },
+            {
+                id: 'prof-2',
+                name: 'Prof. Yann LeCun',
+                university: 'New York University (NYU)',
+                email: 'yann@cs.nyu.edu',
+                department: 'Center for Data Science',
+                interests: 'Self-Supervised Learning, Computer Vision, Energy-Based Models',
+                intake: 'Fall 2026',
+                hasOpening: 'Yes',
+                responseStatus: 'Mail Sent',
+                profileViewed: 'Yes',
+                website: 'https://yann.lecun.com',
+                recentPaper: 'A Path Towards Autonomous Machine Intelligence',
+                dateSent: '2026-03-01',
+                notes: 'Sent initial cold email referencing JEPA paper.'
+            },
+            {
+                id: 'prof-3',
+                name: 'Dr. Feifei Li',
+                university: 'Stanford University',
+                email: 'feifeili@cs.stanford.edu',
+                department: 'HAI & Computer Science',
+                interests: 'Visual Intelligence, Spatial Intelligence, Healthcare AI',
+                intake: 'Fall 2026',
+                hasOpening: 'Unknown',
+                responseStatus: 'Not Sent Yet',
+                profileViewed: 'No',
+                website: 'https://profiles.stanford.edu/fei-fei-li',
+                recentPaper: 'Spatial Intelligence in Embodied Agents',
+                dateSent: '',
+                notes: 'Preparing personalized draft focusing on medical AI applications.'
+            }
+        ];
+
+        let defaultUniversities = [
             {
                 id: 'uni-1',
                 name: 'Stanford University',
@@ -565,8 +744,7 @@
             }
         ];
 
-        // Demo Data for Scholarship Track
-        let scholarshipsData = [
+        let defaultScholarships = [
             {
                 id: 'sch-1',
                 name: 'Erasmus Mundus Joint Master (EMJM)',
@@ -608,55 +786,449 @@
             }
         ];
 
+        let professors = [];
+        let universitiesData = [];
+        let scholarshipsData = [];
+
+        function loadLocalData() {
+            const p = localStorage.getItem('professors_data');
+            const u = localStorage.getItem('universities_data');
+            const s = localStorage.getItem('scholarships_data');
+
+            professors = p ? JSON.parse(p) : [...defaultProfessors];
+            universitiesData = u ? JSON.parse(u) : [...defaultUniversities];
+            scholarshipsData = s ? JSON.parse(s) : [...defaultScholarships];
+        }
+
+        function saveData() {
+            localStorage.setItem('professors_data', JSON.stringify(professors));
+            localStorage.setItem('universities_data', JSON.stringify(universitiesData));
+            localStorage.setItem('scholarships_data', JSON.stringify(scholarshipsData));
+            pushToGitHub();
+        }
+
+        // NAVIGATION TAB SWITCHING
         function switchMainTab(tabName) {
             activeMainTab = tabName;
-            
-            document.getElementById('moduleProf').classList.toggle('hidden', tabName !== 'prof');
-            document.getElementById('moduleUni').classList.toggle('hidden', tabName !== 'uni');
-            document.getElementById('moduleSch').classList.toggle('hidden', tabName !== 'sch');
+
+            const modProf = document.getElementById('moduleProf');
+            const modUni = document.getElementById('moduleUni');
+            const modSch = document.getElementById('moduleSch');
+
+            if (modProf) modProf.classList.toggle('hidden', tabName !== 'prof');
+            if (modUni) modUni.classList.toggle('hidden', tabName !== 'uni');
+            if (modSch) modSch.classList.toggle('hidden', tabName !== 'sch');
 
             const activeBtnClass = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm";
             const inactiveBtnClass = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
 
-            document.getElementById('tabProf').className = tabName === 'prof' ? activeBtnClass : inactiveBtnClass;
-            document.getElementById('tabUni').className = tabName === 'uni' ? activeBtnClass : inactiveBtnClass;
-            document.getElementById('tabSch').className = tabName === 'sch' ? activeBtnClass : inactiveBtnClass;
+            const btnProf = document.getElementById('tabProf');
+            const btnUni = document.getElementById('tabUni');
+            const btnSch = document.getElementById('tabSch');
+
+            if (btnProf) btnProf.className = tabName === 'prof' ? activeBtnClass : inactiveBtnClass;
+            if (btnUni) btnUni.className = tabName === 'uni' ? activeBtnClass : inactiveBtnClass;
+            if (btnSch) btnSch.className = tabName === 'sch' ? activeBtnClass : inactiveBtnClass;
 
             const lblBtn = document.getElementById('lblPrimaryAdd');
+            if (lblBtn) {
+                if (tabName === 'prof') lblBtn.textContent = "Add Professor";
+                else if (tabName === 'uni') lblBtn.textContent = "Add University";
+                else if (tabName === 'sch') lblBtn.textContent = "Add Scholarship";
+            }
+
             if (tabName === 'prof') {
-                lblBtn.textContent = "Add Professor";
+                applyFiltersAndRender();
             } else if (tabName === 'uni') {
-                lblBtn.textContent = "Add University";
                 renderUniversityTrack();
             } else if (tabName === 'sch') {
-                lblBtn.textContent = "Add Scholarship";
                 renderScholarshipTrack();
             }
         }
 
         function triggerPrimaryAdd() {
-            if (activeMainTab === 'prof') openAddModal();
+            if (activeMainTab === 'prof') openProfModal();
             else if (activeMainTab === 'uni') openUniModal();
             else if (activeMainTab === 'sch') openSchModal();
         }
 
+        // PROFESSOR MODULE LOGIC & VIEWS
+        function switchView(viewName) {
+            currentProfView = viewName;
+            const activeClass = "px-3 py-1.5 rounded-md text-xs font-semibold transition flex items-center gap-1.5 bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm";
+            const inactiveClass = "px-3 py-1.5 rounded-md text-xs font-semibold transition flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+
+            document.getElementById('btnViewGrouped').className = viewName === 'grouped' ? activeClass : inactiveClass;
+            document.getElementById('btnViewTable').className = viewName === 'table' ? activeClass : inactiveClass;
+            document.getElementById('btnViewKanban').className = viewName === 'kanban' ? activeClass : inactiveClass;
+
+            applyFiltersAndRender();
+        }
+
+        function updateAnalyticsStats(filtered) {
+            const total = filtered.length;
+            const unis = new Set(filtered.map(p => p.university.trim())).size;
+            const sent = filtered.filter(p => p.responseStatus !== 'Not Sent Yet').length;
+            const openings = filtered.filter(p => p.hasOpening === 'Yes').length;
+            const replies = filtered.filter(p => ['Positive Response', 'Interview Scheduled', 'Negative / Full'].includes(p.responseStatus)).length;
+            const rate = sent > 0 ? Math.round((replies / sent) * 100) : 0;
+
+            document.getElementById('statTotal').textContent = total;
+            document.getElementById('statUniversities').textContent = unis;
+            document.getElementById('statSent').textContent = sent;
+            document.getElementById('statOpenings').textContent = openings;
+            document.getElementById('statReplies').textContent = replies;
+            document.getElementById('statResponseRate').textContent = rate + '%';
+        }
+
+        function getStatusBadge(status) {
+            switch (status) {
+                case 'Positive Response': return '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">Positive 🎉</span>';
+                case 'Interview Scheduled': return '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-100 text-purple-800 dark:bg-purple-950 dark:text-purple-300">Interview 📅</span>';
+                case 'Mail Sent': return '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800 dark:bg-sky-950 dark:text-sky-300">Mail Sent ✉️</span>';
+                case 'Follow-up Sent': return '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300">Follow-up 📩</span>';
+                case 'Negative / Full': return '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-100 text-rose-800 dark:bg-rose-950 dark:text-rose-300">Lab Full / Refused</span>';
+                case 'No Response / Ghosted': return '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-400">No Response</span>';
+                default: return '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">Not Sent Yet</span>';
+            }
+        }
+
+        function applyFiltersAndRender() {
+            const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+            const filterIntake = document.getElementById('filterIntake')?.value || 'ALL';
+            const filterOpening = document.getElementById('filterOpening')?.value || 'ALL';
+            const filterResponse = document.getElementById('filterResponse')?.value || 'ALL';
+            const filterProfileViewed = document.getElementById('filterProfileViewed')?.value || 'ALL';
+            const sortUni = document.getElementById('sortUniversity')?.value || 'name-asc';
+
+            let filtered = professors.filter(p => {
+                const textMatch = !search || p.name.toLowerCase().includes(search) || p.university.toLowerCase().includes(search) || p.interests.toLowerCase().includes(search) || (p.department && p.department.toLowerCase().includes(search));
+                const intakeMatch = filterIntake === 'ALL' || p.intake === filterIntake;
+                const openingMatch = filterOpening === 'ALL' || p.hasOpening === filterOpening;
+                const responseMatch = filterResponse === 'ALL' || p.responseStatus === filterResponse;
+                const viewedMatch = filterProfileViewed === 'ALL' || p.profileViewed === filterProfileViewed;
+                return textMatch && intakeMatch && openingMatch && responseMatch && viewedMatch;
+            });
+
+            updateAnalyticsStats(filtered);
+
+            const container = document.getElementById('viewsContainer');
+            if (!container) return;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-12 text-center space-y-3">
+                        <div class="w-12 h-12 mx-auto rounded-full bg-blue-50 dark:bg-blue-950/50 flex items-center justify-center text-blue-500">
+                            <i class="fa-solid fa-user-slash text-xl"></i>
+                        </div>
+                        <h3 class="font-bold text-slate-900 dark:text-white">No professors matched your search criteria</h3>
+                        <p class="text-xs text-slate-500 max-w-sm mx-auto">Try resetting filters or add a new professor profile to start tracking.</p>
+                        <button onclick="openProfModal()" class="px-4 py-2 bg-blue-600 text-white rounded-lg text-xs font-semibold shadow hover:bg-blue-700">Add New Professor</button>
+                    </div>`;
+                return;
+            }
+
+            if (currentProfView === 'grouped') {
+                renderGroupedView(container, filtered, sortUni);
+            } else if (currentProfView === 'table') {
+                renderTableView(container, filtered);
+            } else if (currentProfView === 'kanban') {
+                renderKanbanView(container, filtered);
+            }
+        }
+
+        function renderGroupedView(container, filtered, sortUni) {
+            const grouped = {};
+            filtered.forEach(p => {
+                const uName = p.university.trim();
+                if (!grouped[uName]) grouped[uName] = [];
+                grouped[uName].push(p);
+            });
+
+            let keys = Object.keys(grouped);
+            if (sortUni === 'name-asc') keys.sort((a, b) => a.localeCompare(b));
+            if (sortUni === 'name-desc') keys.sort((a, b) => b.localeCompare(a));
+            if (sortUni === 'count-desc') keys.sort((a, b) => grouped[b].length - grouped[a].length);
+
+            let html = ``;
+            keys.forEach(uName => {
+                const list = grouped[uName];
+                html += `
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+                        <div class="px-4 py-3 bg-slate-50 dark:bg-slate-800/60 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center gap-2">
+                                <i class="fa-solid fa-building-columns text-blue-500 text-xs"></i>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(uName)}</h3>
+                            </div>
+                            <span class="px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 font-bold text-[10px]">${list.length} Professors</span>
+                        </div>
+                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            ${list.map(p => `
+                                <div class="bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200/80 dark:border-slate-700/60 space-y-3 text-xs flex flex-col justify-between hover:border-blue-300 dark:hover:border-blue-700 transition">
+                                    <div class="space-y-2">
+                                        <div class="flex items-start justify-between gap-2">
+                                            <div>
+                                                <h4 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(p.name)}</h4>
+                                                <p class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(p.department || 'Department N/A')}</p>
+                                            </div>
+                                            ${getStatusBadge(p.responseStatus)}
+                                        </div>
+
+                                        <div class="text-slate-600 dark:text-slate-300 space-y-1 text-[11px]">
+                                            <div>📧 <a href="mailto:${escapeHtml(p.email)}" class="text-blue-600 dark:text-blue-400 hover:underline font-mono">${escapeHtml(p.email || 'No email')}</a></div>
+                                            <div>🎯 Opening: <strong class="${p.hasOpening === 'Yes' ? 'text-emerald-600 dark:text-emerald-400' : ''}">${escapeHtml(p.hasOpening)}</strong> | Intake: <strong>${escapeHtml(p.intake)}</strong></div>
+                                            <div>🔬 Interests: <span class="italic text-slate-500">${escapeHtml(p.interests || 'N/A')}</span></div>
+                                            ${p.recentPaper ? `<div>📄 Paper: <span class="text-slate-700 dark:text-slate-200 font-medium">${escapeHtml(p.recentPaper)}</span></div>` : ''}
+                                        </div>
+
+                                        ${p.notes ? `<div class="bg-white dark:bg-slate-900 p-2 rounded-lg border border-slate-200 dark:border-slate-800 text-[11px] text-slate-500 italic">${escapeHtml(p.notes)}</div>` : ''}
+                                    </div>
+
+                                    <div class="pt-3 border-t border-slate-200 dark:border-slate-700/60 flex items-center justify-between">
+                                        <button onclick="openComposerModal('${p.id}')" class="px-2.5 py-1 bg-amber-500/10 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20 rounded font-bold text-[11px] flex items-center gap-1 transition">
+                                            <i class="fa-solid fa-wand-magic-sparkles"></i> Draft Mail
+                                        </button>
+                                        <div class="flex items-center gap-2">
+                                            <button onclick="editProfModal('${p.id}')" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200" title="Edit"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button onclick="deleteProf('${p.id}')" class="text-rose-400 hover:text-rose-600" title="Delete"><i class="fa-solid fa-trash-can"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function renderTableView(container, filtered) {
+            let html = `
+                <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-x-auto shadow-sm">
+                    <table class="w-full text-left text-xs text-slate-600 dark:text-slate-300">
+                        <thead class="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-200 uppercase text-[10px] tracking-wider font-bold border-b border-slate-200 dark:border-slate-800">
+                            <tr>
+                                <th class="px-4 py-3">Professor Name</th>
+                                <th class="px-4 py-3">University</th>
+                                <th class="px-4 py-3">Email</th>
+                                <th class="px-4 py-3">Intake</th>
+                                <th class="px-4 py-3">Opening</th>
+                                <th class="px-4 py-3">Status</th>
+                                <th class="px-4 py-3 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+                            ${filtered.map(p => `
+                                <tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition">
+                                    <td class="px-4 py-3 font-bold text-slate-900 dark:text-white whitespace-nowrap">${escapeHtml(p.name)}</td>
+                                    <td class="px-4 py-3 whitespace-nowrap">${escapeHtml(p.university)}</td>
+                                    <td class="px-4 py-3 font-mono text-blue-600 dark:text-blue-400 whitespace-nowrap">${escapeHtml(p.email || 'N/A')}</td>
+                                    <td class="px-4 py-3 whitespace-nowrap">${escapeHtml(p.intake)}</td>
+                                    <td class="px-4 py-3 whitespace-nowrap font-medium ${p.hasOpening === 'Yes' ? 'text-emerald-600 dark:text-emerald-400' : ''}">${escapeHtml(p.hasOpening)}</td>
+                                    <td class="px-4 py-3 whitespace-nowrap">${getStatusBadge(p.responseStatus)}</td>
+                                    <td class="px-4 py-3 text-right whitespace-nowrap space-x-2">
+                                        <button onclick="openComposerModal('${p.id}')" class="text-amber-600 hover:text-amber-700 font-semibold" title="Draft Email"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Draft</button>
+                                        <button onclick="editProfModal('${p.id}')" class="text-slate-400 hover:text-slate-600"><i class="fa-solid fa-pen-to-square"></i></button>
+                                        <button onclick="deleteProf('${p.id}')" class="text-rose-400 hover:text-rose-600"><i class="fa-solid fa-trash-can"></i></button>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>`;
+            container.innerHTML = html;
+        }
+
+        function renderKanbanView(container, filtered) {
+            const columns = [
+                { title: 'Not Sent Yet', status: 'Not Sent Yet' },
+                { title: 'Mail Sent', status: 'Mail Sent' },
+                { title: 'Follow-up Sent', status: 'Follow-up Sent' },
+                { title: 'Positive / Interview', status: ['Positive Response', 'Interview Scheduled'] },
+                { title: 'Negative / Ghosted', status: ['Negative / Full', 'No Response / Ghosted'] }
+            ];
+
+            let html = `<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">`;
+            columns.forEach(col => {
+                const list = filtered.filter(p => Array.isArray(col.status) ? col.status.includes(p.responseStatus) : p.responseStatus === col.status);
+                html += `
+                    <div class="bg-slate-100 dark:bg-slate-900/60 p-3 rounded-xl border border-slate-200 dark:border-slate-800 space-y-3">
+                        <div class="flex items-center justify-between border-b pb-2 border-slate-200 dark:border-slate-800">
+                            <span class="font-bold text-xs text-slate-800 dark:text-slate-200">${col.title}</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold text-[10px]">${list.length}</span>
+                        </div>
+                        <div class="space-y-2 max-h-[600px] overflow-y-auto pr-1">
+                            ${list.map(p => `
+                                <div class="bg-white dark:bg-slate-800 p-3 rounded-lg border border-slate-200 dark:border-slate-700 shadow-sm space-y-2 text-xs">
+                                    <div class="font-bold text-slate-900 dark:text-white">${escapeHtml(p.name)}</div>
+                                    <div class="text-[11px] text-slate-500">${escapeHtml(p.university)}</div>
+                                    <div class="flex justify-between items-center pt-2 border-t border-slate-100 dark:border-slate-700">
+                                        <button onclick="openComposerModal('${p.id}')" class="text-amber-600 dark:text-amber-400 text-[10px] font-bold hover:underline"><i class="fa-solid fa-wand-magic-sparkles mr-1"></i>Draft</button>
+                                        <button onclick="editProfModal('${p.id}')" class="text-slate-400 hover:text-slate-600 text-[10px]"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        // PROFESSOR CRUD MODAL
+        function openProfModal() {
+            document.getElementById('editProfId').value = '';
+            document.getElementById('profForm').reset();
+            document.getElementById('profModalTitle').innerHTML = '<i class="fa-solid fa-user-plus text-blue-500"></i><span>Add New Professor Profile</span>';
+            document.getElementById('profModal').classList.remove('hidden');
+        }
+
+        function closeProfModal() { document.getElementById('profModal').classList.add('hidden'); }
+
+        function editProfModal(id) {
+            const p = professors.find(item => item.id === id);
+            if (!p) return;
+
+            document.getElementById('editProfId').value = p.id;
+            document.getElementById('profName').value = p.name;
+            document.getElementById('profUniversity').value = p.university;
+            document.getElementById('profEmail').value = p.email || '';
+            document.getElementById('profDepartment').value = p.department || '';
+            document.getElementById('profInterests').value = p.interests || '';
+            document.getElementById('profIntake').value = p.intake || 'Fall 2026';
+            document.getElementById('profOpening').value = p.hasOpening || 'Unknown';
+            document.getElementById('profResponse').value = p.responseStatus || 'Not Sent Yet';
+            document.getElementById('profProfileViewed').value = p.profileViewed || 'No';
+            document.getElementById('profWebsite').value = p.website || '';
+            document.getElementById('profPaper').value = p.recentPaper || '';
+            document.getElementById('profNotes').value = p.notes || '';
+
+            document.getElementById('profModalTitle').innerHTML = '<i class="fa-solid fa-user-pen text-blue-500"></i><span>Edit Professor Profile</span>';
+            document.getElementById('profModal').classList.remove('hidden');
+        }
+
+        function handleProfSubmit(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editProfId').value;
+            const record = {
+                id: editId || 'prof-' + Date.now(),
+                name: document.getElementById('profName').value.trim(),
+                university: document.getElementById('profUniversity').value.trim(),
+                email: document.getElementById('profEmail').value.trim(),
+                department: document.getElementById('profDepartment').value.trim(),
+                interests: document.getElementById('profInterests').value.trim(),
+                intake: document.getElementById('profIntake').value,
+                hasOpening: document.getElementById('profOpening').value,
+                responseStatus: document.getElementById('profResponse').value,
+                profileViewed: document.getElementById('profProfileViewed').value,
+                website: document.getElementById('profWebsite').value.trim(),
+                recentPaper: document.getElementById('profPaper').value.trim(),
+                notes: document.getElementById('profNotes').value.trim(),
+                dateSent: editId ? (professors.find(x=>x.id===editId)?.dateSent || '') : ''
+            };
+
+            if (editId) {
+                const idx = professors.findIndex(p => p.id === editId);
+                if (idx !== -1) professors[idx] = record;
+                showToast('Professor profile updated!');
+            } else {
+                professors.unshift(record);
+                showToast('New professor added!');
+            }
+
+            saveData();
+            closeProfModal();
+            applyFiltersAndRender();
+        }
+
+        function deleteProf(id) {
+            if (confirm('Delete this professor profile from your tracker?')) {
+                professors = professors.filter(p => p.id !== id);
+                saveData();
+                showToast('Professor profile deleted.', 'fa-circle-xmark text-rose-400');
+                applyFiltersAndRender();
+            }
+        }
+
+        // EMAIL DRAFT COMPOSER MODAL
+        function openComposerModal(profId) {
+            const p = professors.find(x => x.id === profId);
+            if (!p) return;
+            currentComposerProfId = profId;
+
+            document.getElementById('composerProfName').textContent = p.name;
+            document.getElementById('composerProfEmail').textContent = p.email ? `<${p.email}>` : '(No Email Provided)';
+
+            const subject = `Inquiry regarding PhD/Graduate Research Opportunities - ${p.intake}`;
+            const body = `Dear ${p.name},
+
+I hope this email finds you well.
+
+I am writing to express my strong interest in joining your research group at ${p.university} for the ${p.intake} intake. My academic background aligns closely with your work in ${p.interests || 'your lab'}.
+
+I recently read your work on "${p.recentPaper || 'your recent publications'}" and was particularly inspired by your findings. My prior work focused on similar methodology, and I am eager to contribute to your ongoing projects.
+
+Attached please find my CV for your consideration. I would welcome the opportunity to briefly discuss potential research fit or open positions in your lab.
+
+Thank you for your time and consideration.
+
+Best regards,
+[Your Name]
+[Your Degree / Current University]`;
+
+            document.getElementById('composerSubject').value = subject;
+            document.getElementById('composerBody').value = body;
+
+            const mailto = `mailto:${encodeURIComponent(p.email || '')}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            document.getElementById('composerMailtoBtn').href = mailto;
+
+            document.getElementById('emailComposerModal').classList.remove('hidden');
+        }
+
+        function closeEmailModal() {
+            document.getElementById('emailComposerModal').classList.add('hidden');
+            currentComposerProfId = null;
+        }
+
+        function copyEmailToClipboard() {
+            const body = document.getElementById('composerBody').value;
+            navigator.clipboard.writeText(body);
+            showToast('Email content copied to clipboard!');
+        }
+
+        function markMailSentFromModal() {
+            if (currentComposerProfId) {
+                const idx = professors.findIndex(p => p.id === currentComposerProfId);
+                if (idx !== -1) {
+                    professors[idx].responseStatus = 'Mail Sent';
+                    professors[idx].dateSent = new Date().toISOString().split('T')[0];
+                    saveData();
+                    applyFiltersAndRender();
+                    showToast('Marked as Mail Sent!');
+                }
+            }
+        }
+
+        // UNIVERSITY MODULE LOGIC
         function renderUniversityTrack() {
             const search = (document.getElementById('uniSearchInput')?.value || '').toLowerCase();
             const countryFilter = document.getElementById('filterUniCountry')?.value || 'ALL';
             const container = document.getElementById('uniTrackContainer');
 
+            if (!container) return;
+
             const filtered = universitiesData.filter(u => {
-                const matchSearch = !search || u.name.toLowerCase().includes(search) || u.notes.toLowerCase().includes(search);
+                const matchSearch = !search || u.name.toLowerCase().includes(search) || (u.notes && u.notes.toLowerCase().includes(search));
                 const matchCountry = countryFilter === 'ALL' || u.country === countryFilter;
                 return matchSearch && matchCountry;
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="bg-white dark:bg-slate-900 rounded-xl p-8 text-center text-xs text-slate-500">No universities found matching your criteria.</div>`;
+                container.innerHTML = `<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8 text-center text-xs text-slate-500">No university requirements found matching your search.</div>`;
                 return;
             }
 
-            // Group by country
             const grouped = {};
             filtered.forEach(u => {
                 if (!grouped[u.country]) grouped[u.country] = [];
@@ -666,27 +1238,29 @@
             let html = ``;
             Object.keys(grouped).forEach(cName => {
                 html += `
-                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
                         <div class="px-4 py-3 bg-slate-50 dark:bg-slate-800/60 font-bold text-xs text-slate-800 dark:text-slate-200 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
                             <span>📍 ${cName} Universities</span>
                             <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px]">${grouped[cName].length} Entries</span>
                         </div>
-                        <div class="p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             ${grouped[cName].map(u => `
-                                <div class="bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-lg border border-slate-200/80 dark:border-slate-700/60 space-y-2 text-xs">
-                                    <div class="flex items-start justify-between gap-1">
-                                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(u.name)}</h4>
-                                        <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 font-semibold text-[10px]">${escapeHtml(u.intake)}</span>
+                                <div class="bg-slate-50 dark:bg-slate-800/40 p-4 rounded-xl border border-slate-200/80 dark:border-slate-700/60 space-y-3 text-xs flex flex-col justify-between">
+                                    <div class="space-y-2">
+                                        <div class="flex items-start justify-between gap-1">
+                                            <h4 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(u.name)}</h4>
+                                            <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 font-semibold text-[10px]">${escapeHtml(u.intake)}</span>
+                                        </div>
+                                        <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-600 dark:text-slate-300 pt-1">
+                                            <div>Min CGPA: <strong>${escapeHtml(u.cgpa || 'N/A')}</strong></div>
+                                            <div>IELTS/TOEFL: <strong>${escapeHtml(u.ielts || 'N/A')}</strong></div>
+                                            <div>GRE: <strong>${escapeHtml(u.gre)}</strong></div>
+                                            <div>SOP: <strong>${escapeHtml(u.sop || 'N/A')}</strong></div>
+                                            <div>App Fee: <strong>${escapeHtml(u.fee || 'Free')}</strong></div>
+                                            <div>Deadline: <strong>${escapeHtml(u.deadline || 'N/A')}</strong></div>
+                                        </div>
+                                        ${u.notes ? `<div class="italic text-[11px] text-slate-500 bg-white dark:bg-slate-900 p-2 rounded border border-slate-100 dark:border-slate-800">${escapeHtml(u.notes)}</div>` : ''}
                                     </div>
-                                    <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-600 dark:text-slate-300 pt-1">
-                                        <div>Min CGPA: <strong>${escapeHtml(u.cgpa || 'N/A')}</strong></div>
-                                        <div>IELTS/TOEFL: <strong>${escapeHtml(u.ielts || 'N/A')}</strong></div>
-                                        <div>GRE: <strong>${escapeHtml(u.gre)}</strong></div>
-                                        <div>SOP: <strong>${escapeHtml(u.sop || 'N/A')}</strong></div>
-                                        <div>App Fee: <strong>${escapeHtml(u.fee || 'Free')}</strong></div>
-                                        <div>Deadline: <strong>${escapeHtml(u.deadline || 'N/A')}</strong></div>
-                                    </div>
-                                    ${u.notes ? `<div class="italic text-[11px] text-slate-500 bg-white dark:bg-slate-900 p-2 rounded border border-slate-100 dark:border-slate-800">${escapeHtml(u.notes)}</div>` : ''}
                                     <div class="pt-2 flex items-center justify-between border-t border-slate-200 dark:border-slate-700">
                                         ${u.portal ? `<a href="${escapeHtml(u.portal)}" target="_blank" class="text-blue-600 dark:text-blue-400 font-semibold text-[11px] hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Portal</a>` : '<span></span>'}
                                         <div class="flex gap-2">
@@ -709,9 +1283,7 @@
             document.getElementById('uniModal').classList.remove('hidden');
         }
 
-        function closeUniModal() {
-            document.getElementById('uniModal').classList.add('hidden');
-        }
+        function closeUniModal() { document.getElementById('uniModal').classList.add('hidden'); }
 
         function editUniModal(id) {
             const item = universitiesData.find(u => u.id === id);
@@ -759,6 +1331,8 @@
                 universitiesData.unshift(record);
                 showToast('University requirement added!');
             }
+
+            saveData();
             closeUniModal();
             renderUniversityTrack();
         }
@@ -766,24 +1340,28 @@
         function deleteUni(id) {
             if (confirm('Delete this university record?')) {
                 universitiesData = universitiesData.filter(u => u.id !== id);
+                saveData();
                 showToast('University removed.', 'fa-circle-xmark text-rose-400');
                 renderUniversityTrack();
             }
         }
 
+        // SCHOLARSHIP MODULE LOGIC
         function renderScholarshipTrack() {
             const search = (document.getElementById('schSearchInput')?.value || '').toLowerCase();
             const countryFilter = document.getElementById('filterSchCountry')?.value || 'ALL';
             const container = document.getElementById('schTrackContainer');
 
+            if (!container) return;
+
             const filtered = scholarshipsData.filter(s => {
-                const matchSearch = !search || s.name.toLowerCase().includes(search) || s.notes.toLowerCase().includes(search);
+                const matchSearch = !search || s.name.toLowerCase().includes(search) || (s.notes && s.notes.toLowerCase().includes(search));
                 const matchCountry = countryFilter === 'ALL' || s.country === countryFilter;
                 return matchSearch && matchCountry;
             });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<div class="bg-white dark:bg-slate-900 rounded-xl p-8 text-center text-xs text-slate-500">No scholarships found matching your criteria.</div>`;
+                container.innerHTML = `<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-8 text-center text-xs text-slate-500">No scholarship opportunities found matching your search.</div>`;
                 return;
             }
 
@@ -791,19 +1369,19 @@
             filtered.forEach(s => {
                 html += `
                     <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs flex flex-col justify-between">
-                        <div>
+                        <div class="space-y-2">
                             <div class="flex items-start justify-between gap-1 mb-2">
                                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">🌍 ${escapeHtml(s.country)}</span>
                                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">${escapeHtml(s.coverage)}</span>
                             </div>
                             <h4 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(s.name)}</h4>
-                            <div class="mt-2 space-y-1 text-slate-600 dark:text-slate-300 text-[11px]">
-                                <div>Stipend / Grant: <strong>${escapeHtml(s.stipend || 'N/A')}</strong></div>
+                            <div class="space-y-1 text-slate-600 dark:text-slate-300 text-[11px]">
+                                <div>Grant: <strong>${escapeHtml(s.stipend || 'N/A')}</strong></div>
                                 <div>Min CGPA: <strong>${escapeHtml(s.cgpa || 'N/A')}</strong> | IELTS: <strong>${escapeHtml(s.ielts || 'N/A')}</strong></div>
-                                <div>LORs Needed: <strong>${escapeHtml(s.lor || 'N/A')}</strong></div>
+                                <div>LORs: <strong>${escapeHtml(s.lor || 'N/A')}</strong></div>
                                 <div>Deadline: <strong>${escapeHtml(s.deadline || 'N/A')}</strong></div>
                             </div>
-                            ${s.notes ? `<div class="mt-2.5 italic text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800/60 p-2 rounded border border-slate-100 dark:border-slate-800">${escapeHtml(s.notes)}</div>` : ''}
+                            ${s.notes ? `<div class="italic text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800/60 p-2 rounded border border-slate-100 dark:border-slate-800">${escapeHtml(s.notes)}</div>` : ''}
                         </div>
                         <div class="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
                             ${s.link ? `<a href="${escapeHtml(s.link)}" target="_blank" class="text-emerald-600 dark:text-emerald-400 font-bold text-[11px] hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Apply Link</a>` : '<span></span>'}
@@ -825,9 +1403,7 @@
             document.getElementById('schModal').classList.remove('hidden');
         }
 
-        function closeSchModal() {
-            document.getElementById('schModal').classList.add('hidden');
-        }
+        function closeSchModal() { document.getElementById('schModal').classList.add('hidden'); }
 
         function editSchModal(id) {
             const item = scholarshipsData.find(s => s.id === id);
@@ -873,6 +1449,8 @@
                 scholarshipsData.unshift(record);
                 showToast('Scholarship added!');
             }
+
+            saveData();
             closeSchModal();
             renderScholarshipTrack();
         }
@@ -880,14 +1458,110 @@
         function deleteSch(id) {
             if (confirm('Delete this scholarship record?')) {
                 scholarshipsData = scholarshipsData.filter(s => s.id !== id);
+                saveData();
                 showToast('Scholarship deleted.', 'fa-circle-xmark text-rose-400');
                 renderScholarshipTrack();
             }
         }
 
+        // GITHUB SYNC
+        function openSyncModal() {
+            document.getElementById('ghUsername').value = localStorage.getItem('gh_username') || '';
+            document.getElementById('ghRepo').value = localStorage.getItem('gh_repo') || '';
+            document.getElementById('ghToken').value = localStorage.getItem('gh_token') || '';
+            document.getElementById('ghPath').value = localStorage.getItem('gh_path') || 'data.json';
+            document.getElementById('ghBranch').value = localStorage.getItem('gh_branch') || 'main';
+            document.getElementById('syncModal').classList.remove('hidden');
+        }
+
+        function closeSyncModal() { document.getElementById('syncModal').classList.add('hidden'); }
+
+        async function saveSyncConfig(e) {
+            e.preventDefault();
+            localStorage.setItem('gh_username', document.getElementById('ghUsername').value.trim());
+            localStorage.setItem('gh_repo', document.getElementById('ghRepo').value.trim());
+            localStorage.setItem('gh_token', document.getElementById('ghToken').value.trim());
+            localStorage.setItem('gh_path', document.getElementById('ghPath').value.trim() || 'data.json');
+            localStorage.setItem('gh_branch', document.getElementById('ghBranch').value.trim() || 'main');
+            closeSyncModal();
+            showToast('Sync settings saved! Fetching GitHub data...');
+            await syncFromGitHub();
+        }
+
+        async function syncFromGitHub() {
+            const user = localStorage.getItem('gh_username');
+            const repo = localStorage.getItem('gh_repo');
+            const token = localStorage.getItem('gh_token');
+            const path = localStorage.getItem('gh_path') || 'data.json';
+            const branch = localStorage.getItem('gh_branch') || 'main';
+
+            if (!user || !repo || !token) return;
+
+            try {
+                const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}?ref=${branch}`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    fileSha = data.sha;
+                    const content = JSON.parse(decodeURIComponent(escape(atob(data.content))));
+                    if (content.professors) professors = content.professors;
+                    if (content.universities) universitiesData = content.universities;
+                    if (content.scholarships) scholarshipsData = content.scholarships;
+
+                    localStorage.setItem('professors_data', JSON.stringify(professors));
+                    localStorage.setItem('universities_data', JSON.stringify(universitiesData));
+                    localStorage.setItem('scholarships_data', JSON.stringify(scholarshipsData));
+
+                    applyFiltersAndRender();
+                    renderUniversityTrack();
+                    renderScholarshipTrack();
+                    showToast('Synced data from GitHub successfully!');
+                }
+            } catch (err) {
+                showToast('GitHub Sync error. Verify token & repo.', 'fa-circle-xmark text-rose-400');
+            }
+        }
+
+        async function pushToGitHub() {
+            const user = localStorage.getItem('gh_username');
+            const repo = localStorage.getItem('gh_repo');
+            const token = localStorage.getItem('gh_token');
+            const path = localStorage.getItem('gh_path') || 'data.json';
+            const branch = localStorage.getItem('gh_branch') || 'main';
+
+            if (!user || !repo || !token) return;
+
+            const payload = { professors, universities: universitiesData, scholarships: scholarshipsData };
+            const jsonString = JSON.stringify(payload, null, 2);
+            const encoded = btoa(unescape(encodeURIComponent(jsonString)));
+
+            try {
+                const body = { message: "Update academic outreach tracker data", content: encoded, branch };
+                if (fileSha) body.sha = fileSha;
+
+                const res = await fetch(`https://api.github.com/repos/${user}/${repo}/contents/${path}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(body)
+                });
+
+                if (res.ok) {
+                    const resData = await res.json();
+                    fileSha = resData.content.sha;
+                }
+            } catch (err) {
+                console.error("GitHub sync push error:", err);
+            }
+        }
+
+        // JSON EXPORT / IMPORT
         function exportDataJSON() {
             const fullBackup = {
-                professors: professors,
+                professors,
                 universities: universitiesData,
                 scholarships: scholarshipsData,
                 exportDate: new Date().toISOString()
@@ -896,11 +1570,11 @@
             const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullBackup, null, 2));
             const downloadAnchor = document.createElement('a');
             downloadAnchor.setAttribute("href", dataStr);
-            downloadAnchor.setAttribute("download", `global_edu_tracker_backup_${new Date().toISOString().split('T')[0]}.json`);
+            downloadAnchor.setAttribute("download", `academic_tracker_backup_${new Date().toISOString().split('T')[0]}.json`);
             document.body.appendChild(downloadAnchor);
             downloadAnchor.click();
             downloadAnchor.remove();
-            showToast('Full suite database exported as JSON!');
+            showToast('Database exported as JSON!');
         }
 
         function importDataJSON(event) {
@@ -912,22 +1586,30 @@
                 try {
                     const imported = JSON.parse(e.target.result);
                     if (Array.isArray(imported)) {
-                        // Legacy single array format
                         professors = imported;
                     } else if (typeof imported === 'object') {
                         if (imported.professors) professors = imported.professors;
                         if (imported.universities) universitiesData = imported.universities;
                         if (imported.scholarships) scholarshipsData = imported.scholarships;
                     }
+                    saveData();
                     applyFiltersAndRender();
                     renderUniversityTrack();
                     renderScholarshipTrack();
-                    showToast(`Database imported successfully!`);
+                    showToast('Database imported successfully!');
                 } catch(err) {
                     showToast('Failed to parse JSON backup file.', 'fa-circle-xmark text-rose-400');
                 }
             };
             reader.readAsText(file);
+        }
+
+        function showToast(msg, iconClass = 'fa-circle-check text-emerald-400') {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').textContent = msg;
+            document.getElementById('toastIcon').className = `fa-solid ${iconClass}`;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            setTimeout(() => toast.classList.add('translate-y-20', 'opacity-0'), 3000);
         }
 
         function escapeHtml(str) {
@@ -936,7 +1618,9 @@
         }
 
         window.onload = function() {
-            applyFiltersAndRender();
+            loadLocalData();
+            switchMainTab('prof');
+            syncFromGitHub();
         };
     </script>
 </body>
