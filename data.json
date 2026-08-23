@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478556898",
+      "name": "Mylene Queiroz de Farias",
+      "university": "Texas State University",
+      "email": "mylene@unb.br",
+      "department": "Computer Science",
+      "interests": "research interests are in the area of image processing and computer vision. Specifically, I am interested in the areas of video quality assessment, quality of experience, visual attention, immersive media, 3D, VR, AR, and machine learning.",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://userweb.cs.txstate.edu/~asf93",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478493673",
       "name": "Dr. Minhaj Nur Alam",
       "university": "University of North Carolina",
