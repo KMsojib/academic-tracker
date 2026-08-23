@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787477601739",
+      "name": "Kevin Desai",
+      "university": "University of Texas San Antonio",
+      "email": "kevin.desai@utsa.edu",
+      "department": "Computer Science",
+      "interests": "Computer Vision, 3D Reconstruction, 3D Human Pose Estimation, Healthcare",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://virlab.netlify.app/",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787467361061",
       "name": "Junzhou Huang, FAIMBE",
       "university": "The University of Texas at Arlington",
