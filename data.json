@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478250993",
+      "name": "Hossein Kashiani",
+      "university": "Utah State University",
+      "email": "hossein.kashiani@usu.edu",
+      "department": "Computer Science",
+      "interests": "Computer Vision, Trustworthy, robust Ai system, healthcare. Title: MedViT: A robust vision transformer for generalized medical image classification",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://kashiani.github.io/#",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478202818",
       "name": "Bo Xiong",
       "university": "Iowa State University",
