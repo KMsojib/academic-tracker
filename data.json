@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478901225",
+      "name": "Jake Hawes",
+      "university": "University of Wyoming",
+      "email": "jhawes@uwyo.edu",
+      "department": "Computer Science",
+      "interests": "smart rural communities, critical infrastructure, hazard modeling, circular economy, and food systems",
+      "intake": "Spring 2026",
+      "hasOpening": "No",
+      "responseStatus": "Positive Response",
+      "profileViewed": "Yes",
+      "website": "https://jkhawes.github.io/",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478759553",
       "name": "Sahidul Islam",
       "university": "Kennessaw State Unviersity",
