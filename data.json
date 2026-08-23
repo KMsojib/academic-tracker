@@ -244,6 +244,19 @@
   "universities": [],
   "scholarships": [
     {
+      "id": "sch-1787479030905",
+      "name": "Image Processing and Computer Vision",
+      "country": "EMJM (Europe)",
+      "coverage": "Fully Funded",
+      "cgpa": "3.5 / 180",
+      "ielts": "6.5",
+      "lor": "2",
+      "deadline": "2027-02-02",
+      "stipend": "1400",
+      "link": "https://ipcv.eu/",
+      "notes": "Application Start: Didn’t open yet : Expected Open ( 1st November)\nApplication Deadline: Didn’t open yet : Expected End (2nd February)\n\nRequired Documents must submit the following attachments:\n* Cv in Europass Template\n* Bachelor’s degree in English - 180 ECTS\n* Academic Transcript in English.\n* Motivation Letter - No more than 1000 words. Must Include these:\nReason for choosing IPCVai as Field of Interest\nReason for Choosing IPCVai as a study Program.\nMotivation Video\n2 Recommendation Letter’s\nPassport - 1 Copy\n1 Photograph: passport Type\nEnglish Language Test:\nIELTS - 6.5\nMOI - From Institution."
+    },
+    {
       "id": "sch-1787467061078",
       "name": "Erasmus Mundus Joint Master Programme in Imaging",
       "country": "EMJM (Europe)",
