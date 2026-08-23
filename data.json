@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787501479360",
+      "name": "Dr. Md. Belayat Hossain",
+      "university": "Southern Illinois University Carbondale (SIU)",
+      "email": "belayat@cs.siu.edu",
+      "department": "Computer Science",
+      "interests": "Computer Vision, Deep Learning, Generative AI, Multimodal AI, Vision-Language Models, Medical Image Processing, AI in Medicine, and Data-Efficient Learning",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "No",
+      "website": "https://sites.google.com/view/vital-lab/home?utm_source=chatgpt.com",
+      "recentPaper": "\"MammoDenseSegNet: A Context-Aware Deep Learning Model for Dense Tissue Segmentation in Digital Mammograms.\"",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478901225",
       "name": "Jake Hawes",
       "university": "University of Wyoming",
