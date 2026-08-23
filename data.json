@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478493673",
+      "name": "Dr. Minhaj Nur Alam",
+      "university": "University of North Carolina",
+      "email": "minhaj.alam@charlotte.edu",
+      "department": "Computer Science",
+      "interests": "Ai in healthcare and medicine, Computer aided diagnostics, imaging biomarkers.",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Not Sent Yet",
+      "profileViewed": "No",
+      "website": "https://coefs.charlotte.edu/malam8/",
+      "recentPaper": "",
+      "notes": "Current Research : self-supervised and cross-modal machine learning and AI applications in medicine and healthcare, weak and semi supervised ML frameworks, and medical federated learning applications.",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478362241",
       "name": "Dr. Shahid Khan Mohammed",
       "university": "University of North Carolina Charlotte",
