@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academic Outreach & Professor Email Tracker</title>
+    <title>Academic Outreach & Scholarship Tracker</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
@@ -68,6 +68,10 @@
                 <button onclick="openSyncModal()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white transition flex items-center gap-1.5 shadow-sm" title="Configure GitHub Sync">
                     <i class="fa-solid fa-rotate"></i>
                     <span class="hidden sm:inline">⚙ Sync Settings</span>
+                </button>
+                <button onclick="resetToEMJMDefaults()" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-700 dark:text-amber-300 border border-amber-300/50 transition flex items-center gap-1.5" title="Load EMJM Master Programs">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span class="hidden sm:inline">Reload EMJM Programs</span>
                 </button>
                 <button onclick="exportDataJSON()" class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5" title="Export Full Database JSON">
                     <i class="fa-solid fa-download text-blue-500"></i>
@@ -228,18 +232,18 @@
             <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="relative flex-1 w-full">
                     <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" id="uniSearchInput" oninput="renderUniversityTrack()" placeholder="Search university, requirements..." 
+                    <input type="text" id="uniSearchInput" oninput="renderUniversityTrack()" placeholder="Search university, requirements, ECTS..." 
                         class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="flex items-center space-x-3 w-full md:w-auto">
                     <select id="filterUniCountry" onchange="renderUniversityTrack()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-semibold text-slate-800 dark:text-slate-200">
                         <option value="ALL">All Countries 🌍</option>
+                        <option value="EMJM Consortium">EMJM Consortium 🇪🇺</option>
                         <option value="USA">USA 🇺🇸</option>
                         <option value="Germany">Germany 🇩🇪</option>
                         <option value="Canada">Canada 🇨🇦</option>
                         <option value="UK">UK 🇬🇧</option>
                         <option value="Malaysia">Malaysia 🇲🇾</option>
-                        <option value="Australia">Australia 🇦🇺</option>
                     </select>
                     <button onclick="openUniModal()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i class="fa-solid fa-plus"></i> Add University Requirement
@@ -254,18 +258,16 @@
             <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
                 <div class="relative flex-1 w-full">
                     <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                    <input type="text" id="schSearchInput" oninput="renderScholarshipTrack()" placeholder="Search scholarship..." 
+                    <input type="text" id="schSearchInput" oninput="renderScholarshipTrack()" placeholder="Search EMJM, scholarship name, document rules..." 
                         class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 </div>
                 <div class="flex items-center space-x-3 w-full md:w-auto">
                     <select id="filterSchCountry" onchange="renderScholarshipTrack()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-semibold text-slate-800 dark:text-slate-200">
-                        <option value="ALL">All Countries / Programs 🌐</option>
+                        <option value="ALL">All Programs 🌐</option>
                         <option value="EMJM (Europe)">EMJM / Erasmus Mundus 🇪🇺</option>
                         <option value="USA">USA (Fulbright etc.) 🇺🇸</option>
                         <option value="Germany">Germany (DAAD) 🇩🇪</option>
                         <option value="Malaysia">Malaysia (MIS) 🇲🇾</option>
-                        <option value="Japan">Japan (MEXT) 🇯🇵</option>
-                        <option value="UK">UK (Chevening) 🇬🇧</option>
                     </select>
                     <button onclick="openSchModal()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center gap-1.5 whitespace-nowrap">
                         <i class="fa-solid fa-plus"></i> Add Scholarship
@@ -394,17 +396,17 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label class="block font-medium mb-1">University Name *</label>
-                        <input type="text" id="uniName" required placeholder="e.g. MIT / TUM Munich" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                        <input type="text" id="uniName" required placeholder="e.g. EMJM Imaging / POLIMI" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
                     </div>
                     <div>
                         <label class="block font-medium mb-1">Country *</label>
                         <select id="uniCountry" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="EMJM Consortium">EMJM Consortium 🇪🇺</option>
                             <option value="USA">USA 🇺🇸</option>
                             <option value="Germany">Germany 🇩🇪</option>
                             <option value="Canada">Canada 🇨🇦</option>
                             <option value="UK">UK 🇬🇧</option>
                             <option value="Malaysia">Malaysia 🇲🇾</option>
-                            <option value="Australia">Australia 🇦🇺</option>
                             <option value="Other">Other</option>
                         </select>
                     </div>
@@ -412,12 +414,12 @@
 
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                     <div>
-                        <label class="block font-medium mb-1">Min CGPA</label>
-                        <input type="text" id="uniCGPA" placeholder="e.g. 3.20 / 4.0" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                        <label class="block font-medium mb-1">Min CGPA / ECTS</label>
+                        <input type="text" id="uniCGPA" placeholder="e.g. 180 ECTS / 3.20" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
                     </div>
                     <div>
-                        <label class="block font-medium mb-1">IELTS / TOEFL</label>
-                        <input type="text" id="uniIELTS" placeholder="e.g. 7.0 / 90" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                        <label class="block font-medium mb-1">IELTS / MOI</label>
+                        <input type="text" id="uniIELTS" placeholder="e.g. 6.0 / 6.5 or MOI" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
                     </div>
                     <div>
                         <label class="block font-medium mb-1">GRE Status</label>
@@ -429,15 +431,15 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-medium mb-1">SOP Words</label>
-                        <input type="text" id="uniSOP" placeholder="e.g. 1000 words" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                        <label class="block font-medium mb-1">SOP Specs</label>
+                        <input type="text" id="uniSOP" placeholder="e.g. 2000 Chars / 1000 Words" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div>
                         <label class="block font-medium mb-1">App Fee ($ / €)</label>
-                        <input type="text" id="uniFee" placeholder="e.g. $75 / Free" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                        <input type="text" id="uniFee" placeholder="e.g. Free / Same Portal" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
                     </div>
                     <div>
                         <label class="block font-medium mb-1">Deadline Date</label>
@@ -491,8 +493,6 @@
                             <option value="Germany">Germany (DAAD) 🇩🇪</option>
                             <option value="USA">USA (Fulbright) 🇺🇸</option>
                             <option value="Malaysia">Malaysia (MIS) 🇲🇾</option>
-                            <option value="Japan">Japan (MEXT) 🇯🇵</option>
-                            <option value="UK">UK (Chevening) 🇬🇧</option>
                             <option value="Global">Global / Other</option>
                         </select>
                     </div>
@@ -508,24 +508,20 @@
                         </select>
                     </div>
                     <div>
-                        <label class="block font-medium mb-1">Min CGPA</label>
-                        <input type="text" id="schCGPA" placeholder="e.g. 3.25 / 3.50" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                        <label class="block font-medium mb-1">Min CGPA / ECTS</label>
+                        <input type="text" id="schCGPA" placeholder="e.g. 180 ECTS / 30 Math ECTS" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
                     </div>
                     <div>
-                        <label class="block font-medium mb-1">Min IELTS/TOEFL</label>
-                        <input type="text" id="schIELTS" placeholder="e.g. 6.5 / 7.0" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                        <label class="block font-medium mb-1">Min IELTS/TOEFL/MOI</label>
+                        <input type="text" id="schIELTS" placeholder="e.g. 6.0 / 6.5 / MOI" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
                     </div>
                     <div>
                         <label class="block font-medium mb-1">LORs Required</label>
-                        <input type="text" id="schLOR" placeholder="e.g. 2 letters" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                        <input type="text" id="schLOR" placeholder="e.g. 1 or 2 letters" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    <div>
-                        <label class="block font-medium mb-1">Opening Date</label>
-                        <input type="date" id="schDeadline" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
-                    </div>
                     <div>
                         <label class="block font-medium mb-1">Deadline Date</label>
                         <input type="date" id="schDeadline" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
@@ -543,7 +539,7 @@
 
                 <div>
                     <label class="block font-medium mb-1">Special Requirements & Instructions</label>
-                    <textarea id="schNotes" rows="2" placeholder="e.g. Requires 2 years work experience, Motivation letter max 2 pages..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-white"></textarea>
+                    <textarea id="schNotes" rows="3" placeholder="e.g. Stage 1 eligibility check, POLIMI registration required, Europass CV, video requirement..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-white"></textarea>
                 </div>
 
                 <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-2">
@@ -651,7 +647,121 @@
         let currentComposerProfId = null;
         let fileSha = null;
 
-        // Default Data Sets
+        // Default Data Sets - Preloaded with Detailed EMJM Programs
+        let defaultScholarships = [
+            {
+                id: 'sch-imagine',
+                name: 'Erasmus Mundus Joint Master Programme in Imaging',
+                country: 'EMJM (Europe)',
+                coverage: 'Fully Funded',
+                cgpa: '30 ECTS Math + 90 ECTS CS',
+                ielts: '6.0',
+                lor: '1 Recommendation Letter (PDF)',
+                deadline: '2026-01-09',
+                stipend: '€1,400 / month + tuition waived',
+                link: 'https://master-imagine.eu',
+                notes: '• Window: 17 Nov 2025 - 9 Jan 2026\n• Two-Stage Process:\n  1) Stage 1: Shortlisting by partner uni. Shortlisted MUST apply to Politecnico di Milano (POLIMI). Notified by mid-Feb; final result April 2026.\n  2) Stage 2: Online interview mid-March.\n• Specs: 2-Page CV, SOP max 2000 Chars (PDF), Bachelor Certificate & Transcript, Passport copy.\n• Selection: Academic/CV, SOP, Recommendation.'
+            },
+            {
+                id: 'sch-ipcvai',
+                name: 'Image Processing and Computer Vision (IPCVai)',
+                country: 'EMJM (Europe)',
+                coverage: 'Fully Funded',
+                cgpa: 'Bachelor Degree (180 ECTS)',
+                ielts: '6.5 or MOI',
+                lor: '2 Recommendation Letters',
+                deadline: '2026-02-02',
+                stipend: '€1,400 / month + tuition waived',
+                link: 'https://www.ipcv.eu',
+                notes: '• Window: Expected 1 Nov 2025 - 2 Feb 2026\n• Docs required:\n  - Europass Template CV\n  - Motivation Letter (<1000 words: why IPCVai field & program)\n  - Motivation Video\n  - Passport copy + 1 Passport photo\n  - English: IELTS 6.5 OR MOI certificate from institution.'
+            },
+            {
+                id: 'sch-emai',
+                name: 'Erasmus Mundus Joint Master in Artificial Intelligence (EMAI)',
+                country: 'EMJM (Europe)',
+                coverage: 'Fully Funded',
+                cgpa: '180 ECTS Total',
+                ielts: '6.5',
+                lor: '2 Recommendation Letters',
+                deadline: '2025-12-31',
+                stipend: '€1,400 / month + tuition waived',
+                link: 'https://emai-master.eu',
+                notes: '• Window: Opens Nov 2025 - Closes Dec 2025\n• Course Specific Prerequisites:\n  - Math (12 ECTS): calculus, linear algebra, logic, discrete math, combinatorics, stats, info theory, graph theory, number theory.\n  - Programming (12 ECTS): paradigms, algorithms, data structures.\n  - Computer Science (12 ECTS): cryptography & core CS topics.'
+            },
+            {
+                id: 'sch-daad',
+                name: 'DAAD EPOS / Development-Related Postgraduate',
+                country: 'Germany',
+                coverage: 'Fully Funded',
+                cgpa: '3.00',
+                ielts: '6.5',
+                lor: '2 letters (Academic & Professional)',
+                deadline: '2026-11-30',
+                stipend: '€934 - €1,200 / month',
+                link: 'https://www.daad.de/en/study-and-research-in-germany/scholarships/',
+                notes: 'At least 2 years of professional work experience required.'
+            }
+        ];
+
+        let defaultUniversities = [
+            {
+                id: 'uni-imagine',
+                name: 'POLIMI / EMJM Imaging Consortium',
+                country: 'EMJM Consortium',
+                cgpa: '30 Math / 90 CS ECTS',
+                ielts: '6.0',
+                gre: 'Not Required',
+                sop: '2000 Chars (PDF)',
+                fee: 'Same Portal / Free',
+                deadline: '2026-01-09',
+                intake: 'Fall 2026',
+                portal: 'https://master-imagine.eu',
+                notes: 'Stage 1 shortlist notified mid-Feb -> apply to POLIMI. Stage 2 online interview mid-March. Requires 2-pg CV, 1 LOR.'
+            },
+            {
+                id: 'uni-ipcvai',
+                name: 'IPCVai Consortium Universities',
+                country: 'EMJM Consortium',
+                cgpa: '180 ECTS Bachelor',
+                ielts: '6.5 / MOI Accepted',
+                gre: 'Not Required',
+                sop: '1000 Words Max',
+                fee: 'Free',
+                deadline: '2026-02-02',
+                intake: 'Fall 2026',
+                portal: 'https://www.ipcv.eu',
+                notes: ' Europass CV, Motivation Video, 2 LORs, Passport photo. MOI accepted.'
+            },
+            {
+                id: 'uni-emai',
+                name: 'EMAI Consortium Universities',
+                country: 'EMJM Consortium',
+                cgpa: '180 ECTS (12 Math, 12 Prog, 12 CS)',
+                ielts: '6.5',
+                gre: 'Not Required',
+                sop: 'Required',
+                fee: 'Free',
+                deadline: '2025-12-31',
+                intake: 'Fall 2026',
+                portal: 'https://emai-master.eu',
+                notes: 'Strict credit audit: 12 Math ECTS, 12 Programming ECTS, 12 CS ECTS.'
+            },
+            {
+                id: 'uni-tum',
+                name: 'Technical University of Munich (TUM)',
+                country: 'Germany',
+                cgpa: '3.00',
+                ielts: '6.5',
+                gre: 'Not Required',
+                sop: '500 words',
+                fee: 'Free',
+                deadline: '2026-05-31',
+                intake: 'Winter 2026/27',
+                portal: 'https://www.tum.de/en/studies/application',
+                notes: 'Uni-assist VPD required for international qualifications.'
+            }
+        ];
+
         let defaultProfessors = [
             {
                 id: 'prof-1',
@@ -659,7 +769,7 @@
                 university: 'Stanford University',
                 email: 'ang@cs.stanford.edu',
                 department: 'Computer Science & AI Lab',
-                interests: 'Deep Learning, Machine Learning, Computer Vision',
+                interests: 'Deep Learning, Computer Vision, Medical Imaging',
                 intake: 'Fall 2026',
                 hasOpening: 'Yes',
                 responseStatus: 'Positive Response',
@@ -667,7 +777,7 @@
                 website: 'https://cs.stanford.edu/~ang',
                 recentPaper: 'Learning Deep Representations for Robotics',
                 dateSent: '2026-02-10',
-                notes: 'Very encouraging response. Mentioned taking new PhD students.'
+                notes: 'Very encouraging response. Relevant for Computer Vision / EMJM background.'
             },
             {
                 id: 'prof-2',
@@ -684,109 +794,6 @@
                 recentPaper: 'A Path Towards Autonomous Machine Intelligence',
                 dateSent: '2026-03-01',
                 notes: 'Sent initial cold email referencing JEPA paper.'
-            },
-            {
-                id: 'prof-3',
-                name: 'Dr. Feifei Li',
-                university: 'Stanford University',
-                email: 'feifeili@cs.stanford.edu',
-                department: 'HAI & Computer Science',
-                interests: 'Visual Intelligence, Spatial Intelligence, Healthcare AI',
-                intake: 'Fall 2026',
-                hasOpening: 'Unknown',
-                responseStatus: 'Not Sent Yet',
-                profileViewed: 'No',
-                website: 'https://profiles.stanford.edu/fei-fei-li',
-                recentPaper: 'Spatial Intelligence in Embodied Agents',
-                dateSent: '',
-                notes: 'Preparing personalized draft focusing on medical AI applications.'
-            }
-        ];
-
-        let defaultUniversities = [
-            {
-                id: 'uni-1',
-                name: 'Stanford University',
-                country: 'USA',
-                cgpa: '3.60',
-                ielts: '7.5',
-                gre: 'Optional',
-                sop: '1000 words',
-                fee: '$125',
-                deadline: '2026-12-15',
-                intake: 'Fall 2027',
-                portal: 'https://gradadmissions.stanford.edu',
-                notes: 'Requires 3 LORs and transcript official evaluation.'
-            },
-            {
-                id: 'uni-2',
-                name: 'Technical University of Munich (TUM)',
-                country: 'Germany',
-                cgpa: '3.00',
-                ielts: '6.5',
-                gre: 'Not Required',
-                sop: '500 words',
-                fee: 'Free',
-                deadline: '2026-05-31',
-                intake: 'Winter 2026/27',
-                portal: 'https://www.tum.de/en/studies/application',
-                notes: 'Uni-assist VPD required for international qualifications.'
-            },
-            {
-                id: 'uni-3',
-                name: 'Universiti Malaya (UM)',
-                country: 'Malaysia',
-                cgpa: '3.00',
-                ielts: '6.0',
-                gre: 'Not Required',
-                sop: '1 Page',
-                fee: '$50',
-                deadline: '2026-07-30',
-                intake: 'Fall 2026',
-                portal: 'https://aae.um.edu.my',
-                notes: 'Research proposal required for Master/PhD by research.'
-            }
-        ];
-
-        let defaultScholarships = [
-            {
-                id: 'sch-1',
-                name: 'Erasmus Mundus Joint Master (EMJM)',
-                country: 'EMJM (Europe)',
-                coverage: 'Fully Funded',
-                cgpa: '3.25',
-                ielts: '6.5',
-                lor: '2 letters',
-                deadline: '2027-01-15',
-                stipend: '€1,400 / month + tuition waived',
-                link: 'https://eacea.ec.europa.eu/erasmus-plus/emjmd_en',
-                notes: 'Select up to 3 EMJM programs per application cycle.'
-            },
-            {
-                id: 'sch-2',
-                name: 'DAAD EPOS / Development-Related Postgraduate',
-                country: 'Germany',
-                coverage: 'Fully Funded',
-                cgpa: '3.00',
-                ielts: '6.5',
-                lor: '2 letters (Academic & Professional)',
-                deadline: '2026-11-30',
-                stipend: '€934 - €1,200 / month',
-                link: 'https://www.daad.de/en/study-and-research-in-germany/scholarships/',
-                notes: 'At least 2 years of professional work experience required.'
-            },
-            {
-                id: 'sch-3',
-                name: 'Malaysian International Scholarship (MIS)',
-                country: 'Malaysia',
-                coverage: 'Fully Funded',
-                cgpa: '3.50',
-                ielts: '6.5',
-                lor: '2 recommendation letters',
-                deadline: '2026-06-15',
-                stipend: 'RM 1,500 / month',
-                link: 'https://www.mohe.gov.my',
-                notes: 'Must hold offer letter from Malaysian universities.'
             }
         ];
 
@@ -809,6 +816,17 @@
             localStorage.setItem('universities_data', JSON.stringify(universitiesData));
             localStorage.setItem('scholarships_data', JSON.stringify(scholarshipsData));
             pushToGitHub();
+        }
+
+        function resetToEMJMDefaults() {
+            if (confirm("Reload standard EMJM scholarship programs and requirements? This will ensure EMJM Imaging, IPCVai, and EMAI are present in your tracker.")) {
+                scholarshipsData = [...defaultScholarships];
+                universitiesData = [...defaultUniversities];
+                saveData();
+                renderScholarshipTrack();
+                renderUniversityTrack();
+                showToast("EMJM Programs reloaded into database!");
+            }
         }
 
         // NAVIGATION TAB SWITCHING
@@ -1164,7 +1182,7 @@
             document.getElementById('composerProfName').textContent = p.name;
             document.getElementById('composerProfEmail').textContent = p.email ? `<${p.email}>` : '(No Email Provided)';
 
-            const subject = `Inquiry regarding PhD/Graduate Research Opportunities - ${p.intake}`;
+            const subject = `Inquiry regarding Master/PhD Research Opportunities - ${p.intake}`;
             const body = `Dear ${p.name},
 
 I hope this email finds you well.
@@ -1256,14 +1274,14 @@ Best regards,
                                             <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 font-semibold text-[10px]">${escapeHtml(u.intake)}</span>
                                         </div>
                                         <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-600 dark:text-slate-300 pt-1">
-                                            <div>Min CGPA: <strong>${escapeHtml(u.cgpa || 'N/A')}</strong></div>
-                                            <div>IELTS/TOEFL: <strong>${escapeHtml(u.ielts || 'N/A')}</strong></div>
+                                            <div>Min CGPA/ECTS: <strong>${escapeHtml(u.cgpa || 'N/A')}</strong></div>
+                                            <div>IELTS/MOI: <strong>${escapeHtml(u.ielts || 'N/A')}</strong></div>
                                             <div>GRE: <strong>${escapeHtml(u.gre)}</strong></div>
                                             <div>SOP: <strong>${escapeHtml(u.sop || 'N/A')}</strong></div>
                                             <div>App Fee: <strong>${escapeHtml(u.fee || 'Free')}</strong></div>
                                             <div>Deadline: <strong>${escapeHtml(u.deadline || 'N/A')}</strong></div>
                                         </div>
-                                        ${u.notes ? `<div class="italic text-[11px] text-slate-500 bg-white dark:bg-slate-900 p-2 rounded border border-slate-100 dark:border-slate-800">${escapeHtml(u.notes)}</div>` : ''}
+                                        ${u.notes ? `<div class="whitespace-pre-line text-[11px] text-slate-500 bg-white dark:bg-slate-900 p-2.5 rounded border border-slate-100 dark:border-slate-800 leading-relaxed">${escapeHtml(u.notes)}</div>` : ''}
                                     </div>
                                     <div class="pt-2 flex items-center justify-between border-t border-slate-200 dark:border-slate-700">
                                         ${u.portal ? `<a href="${escapeHtml(u.portal)}" target="_blank" class="text-blue-600 dark:text-blue-400 font-semibold text-[11px] hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Portal</a>` : '<span></span>'}
@@ -1372,7 +1390,7 @@ Best regards,
             let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">`;
             filtered.forEach(s => {
                 html += `
-                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs flex flex-col justify-between">
+                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs flex flex-col justify-between hover:border-emerald-500/30 transition">
                         <div class="space-y-2">
                             <div class="flex items-start justify-between gap-1 mb-2">
                                 <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">🌍 ${escapeHtml(s.country)}</span>
@@ -1381,14 +1399,14 @@ Best regards,
                             <h4 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(s.name)}</h4>
                             <div class="space-y-1 text-slate-600 dark:text-slate-300 text-[11px]">
                                 <div>Grant: <strong>${escapeHtml(s.stipend || 'N/A')}</strong></div>
-                                <div>Min CGPA: <strong>${escapeHtml(s.cgpa || 'N/A')}</strong> | IELTS: <strong>${escapeHtml(s.ielts || 'N/A')}</strong></div>
+                                <div>Min CGPA/ECTS: <strong>${escapeHtml(s.cgpa || 'N/A')}</strong> | IELTS: <strong>${escapeHtml(s.ielts || 'N/A')}</strong></div>
                                 <div>LORs: <strong>${escapeHtml(s.lor || 'N/A')}</strong></div>
                                 <div>Deadline: <strong>${escapeHtml(s.deadline || 'N/A')}</strong></div>
                             </div>
-                            ${s.notes ? `<div class="italic text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800/60 p-2 rounded border border-slate-100 dark:border-slate-800">${escapeHtml(s.notes)}</div>` : ''}
+                            ${s.notes ? `<div class="whitespace-pre-line text-[11px] text-slate-600 dark:text-slate-300 bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded border border-slate-200 dark:border-slate-700/60 leading-relaxed">${escapeHtml(s.notes)}</div>` : ''}
                         </div>
                         <div class="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
-                            ${s.link ? `<a href="${escapeHtml(s.link)}" target="_blank" class="text-emerald-600 dark:text-emerald-400 font-bold text-[11px] hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Apply Link</a>` : '<span></span>'}
+                            ${s.link ? `<a href="${escapeHtml(s.link)}" target="_blank" class="text-emerald-600 dark:text-emerald-400 font-bold text-[11px] hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Official Portal</a>` : '<span></span>'}
                             <div class="flex gap-2">
                                 <button onclick="editSchModal('${s.id}')" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button onclick="deleteSch('${s.id}')" class="text-rose-400 hover:text-rose-600"><i class="fa-solid fa-trash-can"></i></button>
@@ -1623,7 +1641,7 @@ Best regards,
 
         window.onload = function() {
             loadLocalData();
-            switchMainTab('prof');
+            switchMainTab('sch');
             syncFromGitHub();
         };
     </script>
