@@ -241,59 +241,116 @@
       "dateSent": ""
     }
   ],
-  "universities": [],
+  "universities": [
+    {
+      "id": "uni-imagine",
+      "name": "POLIMI / EMJM Imaging Consortium",
+      "country": "EMJM Consortium",
+      "cgpa": "30 Math / 90 CS ECTS",
+      "ielts": "6.0",
+      "gre": "Not Required",
+      "sop": "2000 Chars (PDF)",
+      "fee": "Same Portal / Free",
+      "deadline": "2026-01-09",
+      "intake": "Fall 2026",
+      "portal": "https://master-imagine.eu",
+      "notes": "Stage 1 shortlist notified mid-Feb -> apply to POLIMI. Stage 2 online interview mid-March. Requires 2-pg CV, 1 LOR."
+    },
+    {
+      "id": "uni-ipcvai",
+      "name": "IPCVai Consortium Universities",
+      "country": "EMJM Consortium",
+      "cgpa": "180 ECTS Bachelor",
+      "ielts": "6.5 / MOI Accepted",
+      "gre": "Not Required",
+      "sop": "1000 Words Max",
+      "fee": "Free",
+      "deadline": "2026-02-02",
+      "intake": "Fall 2026",
+      "portal": "https://www.ipcv.eu",
+      "notes": " Europass CV, Motivation Video, 2 LORs, Passport photo. MOI accepted."
+    },
+    {
+      "id": "uni-emai",
+      "name": "EMAI Consortium Universities",
+      "country": "EMJM Consortium",
+      "cgpa": "180 ECTS (12 Math, 12 Prog, 12 CS)",
+      "ielts": "6.5",
+      "gre": "Not Required",
+      "sop": "Required",
+      "fee": "Free",
+      "deadline": "2025-12-31",
+      "intake": "Fall 2026",
+      "portal": "https://emai-master.eu",
+      "notes": "Strict credit audit: 12 Math ECTS, 12 Programming ECTS, 12 CS ECTS."
+    },
+    {
+      "id": "uni-tum",
+      "name": "Technical University of Munich (TUM)",
+      "country": "Germany",
+      "cgpa": "3.00",
+      "ielts": "6.5",
+      "gre": "Not Required",
+      "sop": "500 words",
+      "fee": "Free",
+      "deadline": "2026-05-31",
+      "intake": "Winter 2026/27",
+      "portal": "https://www.tum.de/en/studies/application",
+      "notes": "Uni-assist VPD required for international qualifications."
+    }
+  ],
   "scholarships": [
     {
-      "id": "sch-1787479171921",
-      "name": "MASTER OF SCIENCE IN COMMUNICATIONS ENGINEERING AND DATA SCIENCE",
-      "country": "EMJM (Europe)",
-      "coverage": "Fully Funded",
-      "cgpa": "3.5 / 180",
-      "ielts": "6.5",
-      "lor": "2",
-      "deadline": "2027-01-05",
-      "stipend": "1400",
-      "link": "https://www.unite-codas-master.eu/",
-      "notes": "Application Open: 1’st December 2026\nApplication End: 5 January 2027\nAdmission Result Published: End of March 2027\n\n\nMotivational video:\nInclude:\nWhy are you applying?\nWhy would you be a good candidate?\nDuration - 1 Minute\nSize : 100MB\nSubmitted by link - must be accessible and not protected.\n\nGeneral Eligibility:\nBachelor’s degree - 180 ECTS credits.\nScanned Colour copy of the Original BSc degree certificate\nScanned color copy of the Original Transcript of study.\nPassport\nEnglish language: Overall 6.5 and Writing Score 6.0\nLink of Motivational VIdeo:\nMotivation Letter: \nShould be written in English and Max Length - 500 words.\nWritten Directly on the Application form. \nWhy are you applying? Why would you be a good candidate? Must include which university you will apply to.\nCV\nOne Recommendation Letter. - Pdf\n\nProof of Place of Residency: if selected then\nBe issued within 12 months.\nName, current country and city of residence\n\nSelectionCriteria:\nRelevance of Previous studies.\nAcademic performance\nRecognition and quality of institution\nSuitability\nOther areas of Competence."
-    },
-    {
-      "id": "sch-1787479126593",
-      "name": "Erasmus Mundus Joint Master in Artificial Intelligence",
-      "country": "EMJM (Europe)",
-      "coverage": "Fully Funded",
-      "cgpa": "3.5 / 180",
-      "ielts": "6.5",
-      "lor": "2",
-      "deadline": "",
-      "stipend": "1400",
-      "link": "",
-      "notes": "Application Open: November ( Didn’t Open Yet)\nApplication End : December ( Didn't Decleared yet)\n\n**** Academic Requirements:\n* At least 180 ECTS completed.\n**** Mathematical Course:   12 ECTS credit points in the following topics: calculus, linear algebra, logic, discrete mathematics, combinatorics, probability and statistics, information theory, graph theory, and number theory; \n**** Programming courses, min. 12 ECTS credit points in the following topics: programming paradigms, algorithms, and data structures; \n**** Computer Science : 12 ECTS credit points in the following topics: cryptography, security, computer networks, computer hardware, theoretical computer science \n\n**** Mandatory Documents:\nPassport\nBachelor’s Degree.\nAcademic Transcript.\nCV - 2 Pages. - Longer CV will be automatically rejected.\nA letter or Motivation:\nInterest in Following Master’s.\n600-800 Word’s\nLonger Motivation Letters will be automatically rejected.\n**** **** One-Minute Video Introducing:**** **** \nYourself\nBackground\nHow to Contribute to the EMAI program.\nAttach a Word/Pdf file with a link to my video.\nPosted on YouTUBe, Drive or Vimeo.\nOnly 30 mb.\nLonger Video will be automatically rejected.\n**** Two Letter of Recommandation\n**** English Language Test:\n**** IELTS - 6.5 Overall ( both test L-R-W-S - Must 6.5)\n**** Optional Documents:\nProfessional Experience in any field.\nResearch Experience\nAdditional Academic training in areas related to the EMAI.\nProfession Experiences."
-    },
-    {
-      "id": "sch-1787479030905",
-      "name": "Image Processing and Computer Vision",
-      "country": "EMJM (Europe)",
-      "coverage": "Fully Funded",
-      "cgpa": "3.5 / 180",
-      "ielts": "6.5",
-      "lor": "2",
-      "deadline": "2027-02-02",
-      "stipend": "1400",
-      "link": "https://ipcv.eu/",
-      "notes": "Application Start: Didn’t open yet : Expected Open ( 1st November)\nApplication Deadline: Didn’t open yet : Expected End (2nd February)\n\nRequired Documents must submit the following attachments:\n* Cv in Europass Template\n* Bachelor’s degree in English - 180 ECTS\n* Academic Transcript in English.\n* Motivation Letter - No more than 1000 words. Must Include these:\nReason for choosing IPCVai as Field of Interest\nReason for Choosing IPCVai as a study Program.\nMotivation Video\n2 Recommendation Letter’s\nPassport - 1 Copy\n1 Photograph: passport Type\nEnglish Language Test:\nIELTS - 6.5\nMOI - From Institution."
-    },
-    {
-      "id": "sch-1787467061078",
+      "id": "sch-imagine",
       "name": "Erasmus Mundus Joint Master Programme in Imaging",
       "country": "EMJM (Europe)",
       "coverage": "Fully Funded",
-      "cgpa": "3.5",
+      "cgpa": "30 ECTS Math + 90 ECTS CS",
+      "ielts": "6.0",
+      "lor": "1 Recommendation Letter (PDF)",
+      "deadline": "2026-01-09",
+      "stipend": "€1,400 / month + tuition waived",
+      "link": "https://master-imagine.eu",
+      "notes": "• Window: 17 Nov 2025 - 9 Jan 2026\n• Two-Stage Process:\n  1) Stage 1: Shortlisting by partner uni. Shortlisted MUST apply to Politecnico di Milano (POLIMI). Notified by mid-Feb; final result April 2026.\n  2) Stage 2: Online interview mid-March.\n• Specs: 2-Page CV, SOP max 2000 Chars (PDF), Bachelor Certificate & Transcript, Passport copy.\n• Selection: Academic/CV, SOP, Recommendation."
+    },
+    {
+      "id": "sch-ipcvai",
+      "name": "Image Processing and Computer Vision (IPCVai)",
+      "country": "EMJM (Europe)",
+      "coverage": "Fully Funded",
+      "cgpa": "Bachelor Degree (180 ECTS)",
+      "ielts": "6.5 or MOI",
+      "lor": "2 Recommendation Letters",
+      "deadline": "2026-02-02",
+      "stipend": "€1,400 / month + tuition waived",
+      "link": "https://www.ipcv.eu",
+      "notes": "• Window: Expected 1 Nov 2025 - 2 Feb 2026\n• Docs required:\n  - Europass Template CV\n  - Motivation Letter (<1000 words: why IPCVai field & program)\n  - Motivation Video\n  - Passport copy + 1 Passport photo\n  - English: IELTS 6.5 OR MOI certificate from institution."
+    },
+    {
+      "id": "sch-emai",
+      "name": "Erasmus Mundus Joint Master in Artificial Intelligence (EMAI)",
+      "country": "EMJM (Europe)",
+      "coverage": "Fully Funded",
+      "cgpa": "180 ECTS Total",
       "ielts": "6.5",
-      "lor": "1",
-      "deadline": "2026-11-17",
-      "stipend": "1400",
-      "link": "https://www.emjm-imaging.eu/",
-      "notes": "*** Tow State of Application:\n\t1. First stage applications are shortlisted after an eligibility check by partner university.  Shortlisted applicants also need to apply to Politecnico di Milano to ensure POLIMI admission. \nOnly Required to Shortlisted Applicants.\nWill be notified by mid-February(prv.year.they.do) with all instructions.\nApplicants of the first application round will receive the final selection results by April 2026.\n\t2. Second stage : Shortlisted candidates will be invited for an online interview, preliminary in mid-March.\n\nRequirement:\nBachelor's Degree : \n30 ECTS Math \n90 ETC CS Course\nIELTS : 6.0\nCV - 2 Page\nMotivation Letter - 2000 Characters - PDF\nScanned Copy of Original Bachelor's Degree Certificate\nScanned Copy of Original Bachelor's Transcript.\nOne Recommendation Letter - PDF\nCopy of Passport\nSelection Criteria:\nAcademic Excellence and CV\nMotivation Letter\nRecommendation Letter's"
+      "lor": "2 Recommendation Letters",
+      "deadline": "2025-12-31",
+      "stipend": "€1,400 / month + tuition waived",
+      "link": "https://emai-master.eu",
+      "notes": "• Window: Opens Nov 2025 - Closes Dec 2025\n• Course Specific Prerequisites:\n  - Math (12 ECTS): calculus, linear algebra, logic, discrete math, combinatorics, stats, info theory, graph theory, number theory.\n  - Programming (12 ECTS): paradigms, algorithms, data structures.\n  - Computer Science (12 ECTS): cryptography & core CS topics."
+    },
+    {
+      "id": "sch-daad",
+      "name": "DAAD EPOS / Development-Related Postgraduate",
+      "country": "Germany",
+      "coverage": "Fully Funded",
+      "cgpa": "3.00",
+      "ielts": "6.5",
+      "lor": "2 letters (Academic & Professional)",
+      "deadline": "2026-11-30",
+      "stipend": "€934 - €1,200 / month",
+      "link": "https://www.daad.de/en/study-and-research-in-germany/scholarships/",
+      "notes": "At least 2 years of professional work experience required."
     }
   ]
 }
