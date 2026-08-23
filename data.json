@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787477957641",
+      "name": "Pramanik",
+      "university": "Iowa State University",
+      "email": "mano@iastate.edu",
+      "department": "Electric and Computer Science",
+      "interests": "Medical Imaging Systems, Photoacoustic and Thermoacoustic Imaging, Image Reconstruction, Machine Learning, Medical Image Processing,",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Positive Response",
+      "profileViewed": "Yes",
+      "website": "https://www.bilab2012.com/research/deep-learning-in-photoacoustic",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787477677186",
       "name": "Baiyun Chen",
       "university": "Tuskegee University",
