@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Outreach & Professor Email Tracker</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f7ff',
+                            100: '#e0effe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar styling */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        .badge-pulse {
+            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse-ring {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen font-sans transition-colors duration-200">
+
+    <!-- Top Header -->
+    <header class="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+                    <i class="fa-solid fa-graduation-cap text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-tight bg-gradient-to-r from-slate-900 via-blue-900 to-slate-800 dark:from-white dark:via-blue-200 dark:to-slate-300 bg-clip-text text-transparent">
+                        GlobalEdu Tracker AI
+                    </h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Professors, Universities & Scholarships Suite</p>
+                </div>
+            </div>
+
+            <!-- Navigation Tabs -->
+            <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200 dark:border-slate-700">
+                <button id="tabProf" onclick="switchMainTab('prof')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
+                    <i class="fa-solid fa-user-graduate"></i>
+                    <span>ProfTrack</span>
+                </button>
+                <button id="tabUni" onclick="switchMainTab('uni')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fa-solid fa-university"></i>
+                    <span>University Track</span>
+                </button>
+                <button id="tabSch" onclick="switchMainTab('sch')" class="px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                    <i class="fa-solid fa-award"></i>
+                    <span>Scholarship Track</span>
+                </button>
+            </div>
+
+            <!-- Top Actions & Privacy Controls -->
+            <div class="flex items-center space-x-2 sm:space-x-3">
+                <button onclick="exportDataJSON()" class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5" title="Export Full Database JSON">
+                    <i class="fa-solid fa-download text-blue-500"></i>
+                    <span class="hidden sm:inline">Export JSON</span>
+                </button>
+                <label class="px-3 py-1.5 text-xs font-semibold rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition flex items-center gap-1.5 cursor-pointer" title="Import JSON File">
+                    <i class="fa-solid fa-upload text-emerald-500"></i>
+                    <span class="hidden sm:inline">Import</span>
+                    <input type="file" id="importFileInput" accept=".json" class="hidden" onchange="importDataJSON(event)">
+                </label>
+                <button id="btnPrimaryAdd" onclick="triggerPrimaryAdd()" class="px-4 py-1.5 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i>
+                    <span id="lblPrimaryAdd">Add Professor</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- PROFESSOR TRACK MODULE -->
+        <div id="moduleProf" class="space-y-6">
+            <!-- Analytics Overview Bar -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+                        <span>Total Professors</span>
+                        <i class="fa-solid fa-users text-blue-500"></i>
+                    </div>
+                    <div id="statTotal" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+                        <span>Universities</span>
+                        <i class="fa-solid fa-university text-indigo-500"></i>
+                    </div>
+                    <div id="statUniversities" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+                        <span>Emails Sent</span>
+                        <i class="fa-solid fa-paper-plane text-sky-500"></i>
+                    </div>
+                    <div id="statSent" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+                        <span>Openings</span>
+                        <i class="fa-solid fa-door-open text-emerald-500"></i>
+                    </div>
+                    <div id="statOpenings" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">0</div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+                        <span>Replies</span>
+                        <i class="fa-solid fa-reply text-purple-500"></i>
+                    </div>
+                    <div id="statReplies" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+                        <span>Response Rate</span>
+                        <i class="fa-solid fa-chart-line text-amber-500"></i>
+                    </div>
+                    <div id="statResponseRate" class="text-2xl font-bold text-amber-600 dark:text-amber-400">0%</div>
+                </div>
+            </div>
+
+            <!-- Controls & Filters Section -->
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                <div class="flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-4">
+                    <div class="relative flex-1">
+                        <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                        <input type="text" id="searchInput" oninput="applyFiltersAndRender()" placeholder="Search professor, university, research interest..." 
+                            class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    </div>
+
+                    <div class="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-lg self-start lg:self-auto border border-slate-200 dark:border-slate-700">
+                        <button id="btnViewGrouped" onclick="switchView('grouped')" class="px-3 py-1.5 rounded-md text-xs font-semibold transition flex items-center gap-1.5 bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm">
+                            <i class="fa-solid fa-layer-group"></i> Grouped by University
+                        </button>
+                        <button id="btnViewTable" onclick="switchView('table')" class="px-3 py-1.5 rounded-md text-xs font-semibold transition flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                            <i class="fa-solid fa-table"></i> All Table View
+                        </button>
+                        <button id="btnViewKanban" onclick="switchView('kanban')" class="px-3 py-1.5 rounded-md text-xs font-semibold transition flex items-center gap-1.5 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+                            <i class="fa-solid fa-bars-staggered"></i> Pipeline Kanban
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-5 gap-3 pt-2 border-t border-slate-100 dark:border-slate-800 text-xs">
+                    <div>
+                        <label class="block text-slate-500 dark:text-slate-400 font-medium mb-1">Sort Universities By</label>
+                        <select id="sortUniversity" onchange="applyFiltersAndRender()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="name-asc">University Name (A - Z)</option>
+                            <option value="name-desc">University Name (Z - A)</option>
+                            <option value="count-desc">Most Professors Tracked</option>
+                            <option value="date-desc">Latest Mail Sent</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-500 dark:text-slate-400 font-medium mb-1">Filter Intake</label>
+                        <select id="filterIntake" onchange="applyFiltersAndRender()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="ALL">All Intakes</option>
+                            <option value="Fall 2025">Fall 2025</option>
+                            <option value="Spring 2026">Spring 2026</option>
+                            <option value="Fall 2026">Fall 2026</option>
+                            <option value="Spring 2027">Spring 2027</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-500 dark:text-slate-400 font-medium mb-1">Current Opening</label>
+                        <select id="filterOpening" onchange="applyFiltersAndRender()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="ALL">All Opening Statuses</option>
+                            <option value="Yes">Yes (Hiring)</option>
+                            <option value="No">No Opening</option>
+                            <option value="Unknown">Unknown / Unspecified</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-500 dark:text-slate-400 font-medium mb-1">Response Status</label>
+                        <select id="filterResponse" onchange="applyFiltersAndRender()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="ALL">All Response Types</option>
+                            <option value="Not Sent Yet">Not Sent Yet</option>
+                            <option value="Mail Sent">Mail Sent (Awaiting)</option>
+                            <option value="Follow-up Sent">Follow-up Sent</option>
+                            <option value="Positive Response">Positive Response 🎉</option>
+                            <option value="Interview Scheduled">Interview Scheduled 📅</option>
+                            <option value="Negative / Full">Negative / Lab Full</option>
+                            <option value="No Response / Ghosted">No Response</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-500 dark:text-slate-400 font-medium mb-1">Profile Viewed</label>
+                        <select id="filterProfileViewed" onchange="applyFiltersAndRender()" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-800 dark:text-slate-200 focus:outline-none focus:ring-1 focus:ring-blue-500">
+                            <option value="ALL">All</option>
+                            <option value="Yes">Viewed</option>
+                            <option value="No">Not Viewed Yet</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div id="viewsContainer" class="space-y-6"></div>
+        </div>
+
+        <!-- UNIVERSITY TRACK MODULE -->
+        <div id="moduleUni" class="space-y-6 hidden">
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="relative flex-1 w-full">
+                    <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="uniSearchInput" oninput="renderUniversityTrack()" placeholder="Search university, requirements, notes..." 
+                        class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="flex items-center space-x-3 w-full md:w-auto">
+                    <select id="filterUniCountry" onchange="renderUniversityTrack()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-semibold text-slate-800 dark:text-slate-200">
+                        <option value="ALL">All Countries 🌍</option>
+                        <option value="USA">USA 🇺🇸</option>
+                        <option value="Germany">Germany 🇩🇪</option>
+                        <option value="Canada">Canada 🇨🇦</option>
+                        <option value="UK">UK 🇬🇧</option>
+                        <option value="Malaysia">Malaysia 🇲🇾</option>
+                        <option value="Australia">Australia 🇦🇺</option>
+                    </select>
+                    <button onclick="openUniModal()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition flex items-center gap-1.5 whitespace-nowrap">
+                        <i class="fa-solid fa-plus"></i> Add University Requirement
+                    </button>
+                </div>
+            </div>
+
+            <div id="uniTrackContainer" class="space-y-4"></div>
+        </div>
+
+        <!-- SCHOLARSHIP TRACK MODULE -->
+        <div id="moduleSch" class="space-y-6 hidden">
+            <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="relative flex-1 w-full">
+                    <i class="fa-solid fa-search absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="schSearchInput" oninput="renderScholarshipTrack()" placeholder="Search scholarship, coverage, country..." 
+                        class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-lg text-sm text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+                <div class="flex items-center space-x-3 w-full md:w-auto">
+                    <select id="filterSchCountry" onchange="renderScholarshipTrack()" class="bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-xs font-semibold text-slate-800 dark:text-slate-200">
+                        <option value="ALL">All Countries / Programs 🌐</option>
+                        <option value="EMJM (Europe)">EMJM / Erasmus Mundus 🇪🇺</option>
+                        <option value="USA">USA (Fulbright etc.) 🇺🇸</option>
+                        <option value="Germany">Germany (DAAD) 🇩🇪</option>
+                        <option value="Malaysia">Malaysia (MIS) 🇲🇾</option>
+                        <option value="Japan">Japan (MEXT) 🇯🇵</option>
+                        <option value="UK">UK (Chevening) 🇬🇧</option>
+                    </select>
+                    <button onclick="openSchModal()" class="px-4 py-2 text-xs font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition flex items-center gap-1.5 whitespace-nowrap">
+                        <i class="fa-solid fa-plus"></i> Add Scholarship
+                    </button>
+                </div>
+            </div>
+
+            <div id="schTrackContainer" class="space-y-4"></div>
+        </div>
+
+    </main>
+
+    <!-- University Entry Modal -->
+    <div id="uniModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-8">
+            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <h3 id="uniModalTitle" class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-university text-blue-500"></i>
+                    <span>Add University Requirements</span>
+                </h3>
+                <button onclick="closeUniModal()" class="text-slate-400 hover:text-slate-600 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="uniForm" onsubmit="handleUniSubmit(event)" class="p-6 space-y-4 text-xs sm:text-sm">
+                <input type="hidden" id="editUniId" value="">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium mb-1">University Name *</label>
+                        <input type="text" id="uniName" required placeholder="e.g. MIT / TUM Munich" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Country *</label>
+                        <select id="uniCountry" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="USA">USA 🇺🇸</option>
+                            <option value="Germany">Germany 🇩🇪</option>
+                            <option value="Canada">Canada 🇨🇦</option>
+                            <option value="UK">UK 🇬🇧</option>
+                            <option value="Malaysia">Malaysia 🇲🇾</option>
+                            <option value="Australia">Australia 🇦🇺</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div>
+                        <label class="block font-medium mb-1">Min CGPA</label>
+                        <input type="text" id="uniCGPA" placeholder="e.g. 3.20 / 4.0" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">IELTS / TOEFL</label>
+                        <input type="text" id="uniIELTS" placeholder="e.g. 7.0 / 90" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">GRE Status</label>
+                        <select id="uniGRE" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="Not Required">Not Required</option>
+                            <option value="Required">Required</option>
+                            <option value="Optional">Optional</option>
+                            <option value="Waived">Waived</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">SOP Words</label>
+                        <input type="text" id="uniSOP" placeholder="e.g. 1000 words" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-medium mb-1">App Fee ($ / €)</label>
+                        <input type="text" id="uniFee" placeholder="e.g. $75 / Free" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Deadline Date</label>
+                        <input type="date" id="uniDeadline" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Target Intake</label>
+                        <input type="text" id="uniIntake" placeholder="e.g. Fall 2026" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium mb-1">Admission Portal Link</label>
+                    <input type="url" id="uniPortal" placeholder="https://admissions.university.edu" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block font-medium mb-1">Notes / Key Documents Required</label>
+                    <textarea id="uniNotes" rows="2" placeholder="e.g. 3 LORs required, WES Evaluation needed..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-white"></textarea>
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-2">
+                    <button type="button" onclick="closeUniModal()" class="px-4 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700">Save University Requirement</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scholarship Entry Modal -->
+    <div id="schModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-8">
+            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <h3 id="schModalTitle" class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-award text-emerald-500"></i>
+                    <span>Add Scholarship Requirement</span>
+                </h3>
+                <button onclick="closeSchModal()" class="text-slate-400 hover:text-slate-600 transition"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+            <form id="schForm" onsubmit="handleSchSubmit(event)" class="p-6 space-y-4 text-xs sm:text-sm">
+                <input type="hidden" id="editSchId" value="">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block font-medium mb-1">Scholarship / Program Name *</label>
+                        <input type="text" id="schName" required placeholder="e.g. EMJM Erasmus Mundus / DAAD EPOS" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Country / Region *</label>
+                        <select id="schCountry" required class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="EMJM (Europe)">EMJM (Europe) 🇪🇺</option>
+                            <option value="Germany">Germany (DAAD) 🇩🇪</option>
+                            <option value="USA">USA (Fulbright) 🇺🇸</option>
+                            <option value="Malaysia">Malaysia (MIS) 🇲🇾</option>
+                            <option value="Japan">Japan (MEXT) 🇯🇵</option>
+                            <option value="UK">UK (Chevening) 🇬🇧</option>
+                            <option value="Global">Global / Other</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <div>
+                        <label class="block font-medium mb-1">Funding Coverage</label>
+                        <select id="schCoverage" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                            <option value="Fully Funded">Fully Funded 🎉</option>
+                            <option value="Partial / Tuition Waiver">Partial / Tuition Waiver</option>
+                            <option value="Stipend Only">Stipend Only</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Min CGPA</label>
+                        <input type="text" id="schCGPA" placeholder="e.g. 3.25 / 3.50" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Min IELTS/TOEFL</label>
+                        <input type="text" id="schIELTS" placeholder="e.g. 6.5 / 7.0" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">LORs Required</label>
+                        <input type="text" id="schLOR" placeholder="e.g. 2 letters" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-medium mb-1">Deadline Date</label>
+                        <input type="date" id="schDeadline" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Monthly Stipend / Allowance</label>
+                        <input type="text" id="schStipend" placeholder="e.g. €1,400 / month + travel" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium mb-1">Official Portal / Application Link</label>
+                    <input type="url" id="schLink" placeholder="https://scholarship-portal.org" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2 text-slate-900 dark:text-white">
+                </div>
+
+                <div>
+                    <label class="block font-medium mb-1">Special Requirements & Instructions</label>
+                    <textarea id="schNotes" rows="2" placeholder="e.g. Requires 2 years work experience, Motivation letter max 2 pages..." class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-white"></textarea>
+                </div>
+
+                <div class="pt-3 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-2">
+                    <button type="button" onclick="closeSchModal()" class="px-4 py-2 text-xs font-semibold rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800">Cancel</button>
+                    <button type="submit" class="px-5 py-2 text-xs font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700">Save Scholarship</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Email Draft Composer Modal -->
+    <div id="emailComposerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4 overflow-y-auto">
+        <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl w-full max-w-2xl shadow-2xl overflow-hidden my-8">
+            <div class="px-6 py-4 bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+                <h3 class="text-base font-bold text-slate-900 dark:text-white flex items-center gap-2">
+                    <i class="fa-solid fa-wand-magic-sparkles text-amber-500"></i>
+                    <span>Cold Email Draft Generator</span>
+                </h3>
+                <button onclick="closeEmailModal()" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <div class="p-6 space-y-4 text-xs sm:text-sm">
+                <div class="space-y-1">
+                    <span class="text-slate-500 dark:text-slate-400">Recipient:</span>
+                    <span id="composerProfName" class="font-bold text-slate-900 dark:text-white ml-2"></span>
+                    <span id="composerProfEmail" class="text-blue-600 dark:text-blue-400 ml-1"></span>
+                </div>
+
+                <div>
+                    <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Email Subject</label>
+                    <input type="text" id="composerSubject" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-2.5 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none">
+                </div>
+
+                <div>
+                    <label class="block text-slate-700 dark:text-slate-300 font-semibold mb-1">Email Body Draft</label>
+                    <textarea id="composerBody" rows="10" class="w-full bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-3 text-slate-900 dark:text-white font-mono text-xs leading-relaxed focus:ring-2 focus:ring-blue-500 outline-none"></textarea>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                    <button onclick="copyEmailToClipboard()" class="px-4 py-2 text-xs font-semibold rounded-lg border border-slate-300 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 transition flex items-center gap-2">
+                        <i class="fa-solid fa-copy"></i>
+                        <span>Copy Text</span>
+                    </button>
+                    <a id="composerMailtoBtn" href="#" target="_blank" onclick="markMailSentFromModal()" class="px-5 py-2 text-xs font-semibold rounded-lg bg-blue-600 hover:bg-blue-700 text-white shadow-md transition flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Open in Email Client</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 border border-slate-800">
+        <i id="toastIcon" class="fa-solid fa-circle-check text-emerald-400"></i>
+        <span id="toastMessage" class="text-xs sm:text-sm font-medium">Notification message</span>
+    </div>
+
+    <script>
+        let activeMainTab = 'prof'; // 'prof', 'uni', 'sch'
+
+        // Demo Data for University Track
+        let universitiesData = [
+            {
+                id: 'uni-1',
+                name: 'Stanford University',
+                country: 'USA',
+                cgpa: '3.60',
+                ielts: '7.5',
+                gre: 'Optional',
+                sop: '1000 words',
+                fee: '$125',
+                deadline: '2026-12-15',
+                intake: 'Fall 2027',
+                portal: 'https://gradadmissions.stanford.edu',
+                notes: 'Requires 3 LORs and transcript official evaluation.'
+            },
+            {
+                id: 'uni-2',
+                name: 'Technical University of Munich (TUM)',
+                country: 'Germany',
+                cgpa: '3.00',
+                ielts: '6.5',
+                gre: 'Not Required',
+                sop: '500 words',
+                fee: 'Free',
+                deadline: '2026-05-31',
+                intake: 'Winter 2026/27',
+                portal: 'https://www.tum.de/en/studies/application',
+                notes: 'Uni-assist VPD required for international qualifications.'
+            },
+            {
+                id: 'uni-3',
+                name: 'Universiti Malaya (UM)',
+                country: 'Malaysia',
+                cgpa: '3.00',
+                ielts: '6.0',
+                gre: 'Not Required',
+                sop: '1 Page',
+                fee: '$50',
+                deadline: '2026-07-30',
+                intake: 'Fall 2026',
+                portal: 'https://aae.um.edu.my',
+                notes: 'Research proposal required for Master/PhD by research.'
+            }
+        ];
+
+        // Demo Data for Scholarship Track
+        let scholarshipsData = [
+            {
+                id: 'sch-1',
+                name: 'Erasmus Mundus Joint Master (EMJM)',
+                country: 'EMJM (Europe)',
+                coverage: 'Fully Funded',
+                cgpa: '3.25',
+                ielts: '6.5',
+                lor: '2 letters',
+                deadline: '2027-01-15',
+                stipend: '€1,400 / month + tuition waived',
+                link: 'https://eacea.ec.europa.eu/erasmus-plus/emjmd_en',
+                notes: 'Select up to 3 EMJM programs per application cycle.'
+            },
+            {
+                id: 'sch-2',
+                name: 'DAAD EPOS / Development-Related Postgraduate',
+                country: 'Germany',
+                coverage: 'Fully Funded',
+                cgpa: '3.00',
+                ielts: '6.5',
+                lor: '2 letters (Academic & Professional)',
+                deadline: '2026-11-30',
+                stipend: '€934 - €1,200 / month',
+                link: 'https://www.daad.de/en/study-and-research-in-germany/scholarships/',
+                notes: 'At least 2 years of professional work experience required.'
+            },
+            {
+                id: 'sch-3',
+                name: 'Malaysian International Scholarship (MIS)',
+                country: 'Malaysia',
+                coverage: 'Fully Funded',
+                cgpa: '3.50',
+                ielts: '6.5',
+                lor: '2 recommendation letters',
+                deadline: '2026-06-15',
+                stipend: 'RM 1,500 / month',
+                link: 'https://www.mohe.gov.my',
+                notes: 'Must hold offer letter from Malaysian universities.'
+            }
+        ];
+
+        function switchMainTab(tabName) {
+            activeMainTab = tabName;
+            
+            document.getElementById('moduleProf').classList.toggle('hidden', tabName !== 'prof');
+            document.getElementById('moduleUni').classList.toggle('hidden', tabName !== 'uni');
+            document.getElementById('moduleSch').classList.toggle('hidden', tabName !== 'sch');
+
+            const activeBtnClass = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400 shadow-sm";
+            const inactiveBtnClass = "px-3.5 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white";
+
+            document.getElementById('tabProf').className = tabName === 'prof' ? activeBtnClass : inactiveBtnClass;
+            document.getElementById('tabUni').className = tabName === 'uni' ? activeBtnClass : inactiveBtnClass;
+            document.getElementById('tabSch').className = tabName === 'sch' ? activeBtnClass : inactiveBtnClass;
+
+            const lblBtn = document.getElementById('lblPrimaryAdd');
+            if (tabName === 'prof') {
+                lblBtn.textContent = "Add Professor";
+            } else if (tabName === 'uni') {
+                lblBtn.textContent = "Add University";
+                renderUniversityTrack();
+            } else if (tabName === 'sch') {
+                lblBtn.textContent = "Add Scholarship";
+                renderScholarshipTrack();
+            }
+        }
+
+        function triggerPrimaryAdd() {
+            if (activeMainTab === 'prof') openAddModal();
+            else if (activeMainTab === 'uni') openUniModal();
+            else if (activeMainTab === 'sch') openSchModal();
+        }
+
+        function renderUniversityTrack() {
+            const search = (document.getElementById('uniSearchInput')?.value || '').toLowerCase();
+            const countryFilter = document.getElementById('filterUniCountry')?.value || 'ALL';
+            const container = document.getElementById('uniTrackContainer');
+
+            const filtered = universitiesData.filter(u => {
+                const matchSearch = !search || u.name.toLowerCase().includes(search) || u.notes.toLowerCase().includes(search);
+                const matchCountry = countryFilter === 'ALL' || u.country === countryFilter;
+                return matchSearch && matchCountry;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="bg-white dark:bg-slate-900 rounded-xl p-8 text-center text-xs text-slate-500">No universities found matching your criteria.</div>`;
+                return;
+            }
+
+            // Group by country
+            const grouped = {};
+            filtered.forEach(u => {
+                if (!grouped[u.country]) grouped[u.country] = [];
+                grouped[u.country].push(u);
+            });
+
+            let html = ``;
+            Object.keys(grouped).forEach(cName => {
+                html += `
+                    <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
+                        <div class="px-4 py-3 bg-slate-50 dark:bg-slate-800/60 font-bold text-xs text-slate-800 dark:text-slate-200 flex items-center justify-between border-b border-slate-200 dark:border-slate-800">
+                            <span>📍 ${cName} Universities</span>
+                            <span class="px-2 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-[10px]">${grouped[cName].length} Entries</span>
+                        </div>
+                        <div class="p-3 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+                            ${grouped[cName].map(u => `
+                                <div class="bg-slate-50 dark:bg-slate-800/40 p-3.5 rounded-lg border border-slate-200/80 dark:border-slate-700/60 space-y-2 text-xs">
+                                    <div class="flex items-start justify-between gap-1">
+                                        <h4 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(u.name)}</h4>
+                                        <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-700 dark:bg-blue-950 dark:text-blue-300 font-semibold text-[10px]">${escapeHtml(u.intake)}</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-2 text-[11px] text-slate-600 dark:text-slate-300 pt-1">
+                                        <div>Min CGPA: <strong>${escapeHtml(u.cgpa || 'N/A')}</strong></div>
+                                        <div>IELTS/TOEFL: <strong>${escapeHtml(u.ielts || 'N/A')}</strong></div>
+                                        <div>GRE: <strong>${escapeHtml(u.gre)}</strong></div>
+                                        <div>SOP: <strong>${escapeHtml(u.sop || 'N/A')}</strong></div>
+                                        <div>App Fee: <strong>${escapeHtml(u.fee || 'Free')}</strong></div>
+                                        <div>Deadline: <strong>${escapeHtml(u.deadline || 'N/A')}</strong></div>
+                                    </div>
+                                    ${u.notes ? `<div class="italic text-[11px] text-slate-500 bg-white dark:bg-slate-900 p-2 rounded border border-slate-100 dark:border-slate-800">${escapeHtml(u.notes)}</div>` : ''}
+                                    <div class="pt-2 flex items-center justify-between border-t border-slate-200 dark:border-slate-700">
+                                        ${u.portal ? `<a href="${escapeHtml(u.portal)}" target="_blank" class="text-blue-600 dark:text-blue-400 font-semibold text-[11px] hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Portal</a>` : '<span></span>'}
+                                        <div class="flex gap-2">
+                                            <button onclick="editUniModal('${u.id}')" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"><i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button onclick="deleteUni('${u.id}')" class="text-rose-400 hover:text-rose-600"><i class="fa-solid fa-trash-can"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function openUniModal() {
+            document.getElementById('editUniId').value = '';
+            document.getElementById('uniForm').reset();
+            document.getElementById('uniModal').classList.remove('hidden');
+        }
+
+        function closeUniModal() {
+            document.getElementById('uniModal').classList.add('hidden');
+        }
+
+        function editUniModal(id) {
+            const item = universitiesData.find(u => u.id === id);
+            if (!item) return;
+
+            document.getElementById('editUniId').value = item.id;
+            document.getElementById('uniName').value = item.name;
+            document.getElementById('uniCountry').value = item.country;
+            document.getElementById('uniCGPA').value = item.cgpa || '';
+            document.getElementById('uniIELTS').value = item.ielts || '';
+            document.getElementById('uniGRE').value = item.gre || 'Not Required';
+            document.getElementById('uniSOP').value = item.sop || '';
+            document.getElementById('uniFee').value = item.fee || '';
+            document.getElementById('uniDeadline').value = item.deadline || '';
+            document.getElementById('uniIntake').value = item.intake || '';
+            document.getElementById('uniPortal').value = item.portal || '';
+            document.getElementById('uniNotes').value = item.notes || '';
+
+            document.getElementById('uniModal').classList.remove('hidden');
+        }
+
+        function handleUniSubmit(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editUniId').value;
+            const record = {
+                id: editId || 'uni-' + Date.now(),
+                name: document.getElementById('uniName').value.trim(),
+                country: document.getElementById('uniCountry').value,
+                cgpa: document.getElementById('uniCGPA').value.trim(),
+                ielts: document.getElementById('uniIELTS').value.trim(),
+                gre: document.getElementById('uniGRE').value,
+                sop: document.getElementById('uniSOP').value.trim(),
+                fee: document.getElementById('uniFee').value.trim(),
+                deadline: document.getElementById('uniDeadline').value,
+                intake: document.getElementById('uniIntake').value.trim(),
+                portal: document.getElementById('uniPortal').value.trim(),
+                notes: document.getElementById('uniNotes').value.trim()
+            };
+
+            if (editId) {
+                const idx = universitiesData.findIndex(u => u.id === editId);
+                if (idx !== -1) universitiesData[idx] = record;
+                showToast('University details updated!');
+            } else {
+                universitiesData.unshift(record);
+                showToast('University requirement added!');
+            }
+            closeUniModal();
+            renderUniversityTrack();
+        }
+
+        function deleteUni(id) {
+            if (confirm('Delete this university record?')) {
+                universitiesData = universitiesData.filter(u => u.id !== id);
+                showToast('University removed.', 'fa-circle-xmark text-rose-400');
+                renderUniversityTrack();
+            }
+        }
+
+        function renderScholarshipTrack() {
+            const search = (document.getElementById('schSearchInput')?.value || '').toLowerCase();
+            const countryFilter = document.getElementById('filterSchCountry')?.value || 'ALL';
+            const container = document.getElementById('schTrackContainer');
+
+            const filtered = scholarshipsData.filter(s => {
+                const matchSearch = !search || s.name.toLowerCase().includes(search) || s.notes.toLowerCase().includes(search);
+                const matchCountry = countryFilter === 'ALL' || s.country === countryFilter;
+                return matchSearch && matchCountry;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="bg-white dark:bg-slate-900 rounded-xl p-8 text-center text-xs text-slate-500">No scholarships found matching your criteria.</div>`;
+                return;
+            }
+
+            let html = `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">`;
+            filtered.forEach(s => {
+                html += `
+                    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 text-xs flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-start justify-between gap-1 mb-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">🌍 ${escapeHtml(s.country)}</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300">${escapeHtml(s.coverage)}</span>
+                            </div>
+                            <h4 class="font-bold text-slate-900 dark:text-white text-sm">${escapeHtml(s.name)}</h4>
+                            <div class="mt-2 space-y-1 text-slate-600 dark:text-slate-300 text-[11px]">
+                                <div>Stipend / Grant: <strong>${escapeHtml(s.stipend || 'N/A')}</strong></div>
+                                <div>Min CGPA: <strong>${escapeHtml(s.cgpa || 'N/A')}</strong> | IELTS: <strong>${escapeHtml(s.ielts || 'N/A')}</strong></div>
+                                <div>LORs Needed: <strong>${escapeHtml(s.lor || 'N/A')}</strong></div>
+                                <div>Deadline: <strong>${escapeHtml(s.deadline || 'N/A')}</strong></div>
+                            </div>
+                            ${s.notes ? `<div class="mt-2.5 italic text-[11px] text-slate-500 bg-slate-50 dark:bg-slate-800/60 p-2 rounded border border-slate-100 dark:border-slate-800">${escapeHtml(s.notes)}</div>` : ''}
+                        </div>
+                        <div class="pt-2 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
+                            ${s.link ? `<a href="${escapeHtml(s.link)}" target="_blank" class="text-emerald-600 dark:text-emerald-400 font-bold text-[11px] hover:underline"><i class="fa-solid fa-arrow-up-right-from-square mr-1"></i>Apply Link</a>` : '<span></span>'}
+                            <div class="flex gap-2">
+                                <button onclick="editSchModal('${s.id}')" class="text-slate-400 hover:text-slate-700 dark:hover:text-slate-200"><i class="fa-solid fa-pen-to-square"></i></button>
+                                <button onclick="deleteSch('${s.id}')" class="text-rose-400 hover:text-rose-600"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+            container.innerHTML = html;
+        }
+
+        function openSchModal() {
+            document.getElementById('editSchId').value = '';
+            document.getElementById('schForm').reset();
+            document.getElementById('schModal').classList.remove('hidden');
+        }
+
+        function closeSchModal() {
+            document.getElementById('schModal').classList.add('hidden');
+        }
+
+        function editSchModal(id) {
+            const item = scholarshipsData.find(s => s.id === id);
+            if (!item) return;
+
+            document.getElementById('editSchId').value = item.id;
+            document.getElementById('schName').value = item.name;
+            document.getElementById('schCountry').value = item.country;
+            document.getElementById('schCoverage').value = item.coverage;
+            document.getElementById('schCGPA').value = item.cgpa || '';
+            document.getElementById('schIELTS').value = item.ielts || '';
+            document.getElementById('schLOR').value = item.lor || '';
+            document.getElementById('schDeadline').value = item.deadline || '';
+            document.getElementById('schStipend').value = item.stipend || '';
+            document.getElementById('schLink').value = item.link || '';
+            document.getElementById('schNotes').value = item.notes || '';
+
+            document.getElementById('schModal').classList.remove('hidden');
+        }
+
+        function handleSchSubmit(e) {
+            e.preventDefault();
+            const editId = document.getElementById('editSchId').value;
+            const record = {
+                id: editId || 'sch-' + Date.now(),
+                name: document.getElementById('schName').value.trim(),
+                country: document.getElementById('schCountry').value,
+                coverage: document.getElementById('schCoverage').value,
+                cgpa: document.getElementById('schCGPA').value.trim(),
+                ielts: document.getElementById('schIELTS').value.trim(),
+                lor: document.getElementById('schLOR').value.trim(),
+                deadline: document.getElementById('schDeadline').value,
+                stipend: document.getElementById('schStipend').value.trim(),
+                link: document.getElementById('schLink').value.trim(),
+                notes: document.getElementById('schNotes').value.trim()
+            };
+
+            if (editId) {
+                const idx = scholarshipsData.findIndex(s => s.id === editId);
+                if (idx !== -1) scholarshipsData[idx] = record;
+                showToast('Scholarship updated!');
+            } else {
+                scholarshipsData.unshift(record);
+                showToast('Scholarship added!');
+            }
+            closeSchModal();
+            renderScholarshipTrack();
+        }
+
+        function deleteSch(id) {
+            if (confirm('Delete this scholarship record?')) {
+                scholarshipsData = scholarshipsData.filter(s => s.id !== id);
+                showToast('Scholarship deleted.', 'fa-circle-xmark text-rose-400');
+                renderScholarshipTrack();
+            }
+        }
+
+        function exportDataJSON() {
+            const fullBackup = {
+                professors: professors,
+                universities: universitiesData,
+                scholarships: scholarshipsData,
+                exportDate: new Date().toISOString()
+            };
+
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(fullBackup, null, 2));
+            const downloadAnchor = document.createElement('a');
+            downloadAnchor.setAttribute("href", dataStr);
+            downloadAnchor.setAttribute("download", `global_edu_tracker_backup_${new Date().toISOString().split('T')[0]}.json`);
+            document.body.appendChild(downloadAnchor);
+            downloadAnchor.click();
+            downloadAnchor.remove();
+            showToast('Full suite database exported as JSON!');
+        }
+
+        function importDataJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const imported = JSON.parse(e.target.result);
+                    if (Array.isArray(imported)) {
+                        // Legacy single array format
+                        professors = imported;
+                    } else if (typeof imported === 'object') {
+                        if (imported.professors) professors = imported.professors;
+                        if (imported.universities) universitiesData = imported.universities;
+                        if (imported.scholarships) scholarshipsData = imported.scholarships;
+                    }
+                    applyFiltersAndRender();
+                    renderUniversityTrack();
+                    renderScholarshipTrack();
+                    showToast(`Database imported successfully!`);
+                } catch(err) {
+                    showToast('Failed to parse JSON backup file.', 'fa-circle-xmark text-rose-400');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function escapeHtml(str) {
+            if (!str) return '';
+            return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+        }
+
+        window.onload = function() {
+            applyFiltersAndRender();
+        };
+    </script>
+</body>
+</html>
