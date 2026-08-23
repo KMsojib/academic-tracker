@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478636153",
+      "name": "Shishir K. Shah",
+      "university": "University of Houston",
+      "email": "sshah@central.uh.edu",
+      "department": "Computer Science",
+      "interests": "person re-identification, human motion and behavioral analysis, and seismic image analysis.",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "No",
+      "website": "https://shishirkshah.github.io/?utm_source=chatgpt.com",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478556898",
       "name": "Mylene Queiroz de Farias",
       "university": "Texas State University",
