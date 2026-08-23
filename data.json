@@ -1,22 +1,5 @@
 {
-  "professors": [
-    {
-      "id": "prof-1787466275815",
-      "name": "Test Prof",
-      "university": "Test University",
-      "email": "test@gmail.com",
-      "department": "Computer Science",
-      "interests": "Dl, ML and Medical Imaging",
-      "intake": "Fall 2025",
-      "hasOpening": "Yes",
-      "responseStatus": "Not Sent Yet",
-      "profileViewed": "No",
-      "website": "https://kmsojib.github.io/",
-      "recentPaper": "Attention aall you need",
-      "notes": "test",
-      "dateSent": ""
-    }
-  ],
+  "professors": [],
   "universities": [],
   "scholarships": []
 }
