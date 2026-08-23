@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478030098",
+      "name": "Prof. Amiri Golilarz",
+      "university": "The University of Alabama",
+      "email": "noor.amiri@ua.edu",
+      "department": "Computer Science",
+      "interests": "",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://sites.ua.edu/brains/open-positions/",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787477957641",
       "name": "Pramanik",
       "university": "Iowa State University",
