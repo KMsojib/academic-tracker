@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478202818",
+      "name": "Bo Xiong",
+      "university": "Iowa State University",
+      "email": "boxiong@iastate.edu",
+      "department": "Computer Science",
+      "interests": "knowledge graphs, neuro-symbolic AI, and massive language models",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://boxiong.io/",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478082553",
       "name": "Gen Li",
       "university": "University of Houston",
