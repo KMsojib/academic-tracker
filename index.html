@@ -90,60 +90,70 @@
         </div>
     </header>
 
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:px-0 lg:grid-cols-7 gap-3">
+    <!-- Total Professors -->
+    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+            <span>Total Professors</span>
+            <i class="fa-solid fa-users text-blue-500"></i>
+        </div>
+        <div id="statTotal" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
+    </div>
 
-        <!-- PROFESSOR TRACK MODULE -->
-        <div id="moduleProf" class="space-y-6">
-            <!-- Analytics Overview Bar -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
-                        <span>Total Professors</span>
-                        <i class="fa-solid fa-users text-blue-500"></i>
-                    </div>
-                    <div id="statTotal" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
-                </div>
+    <!-- Universities -->
+    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+            <span>Universities</span>
+            <i class="fa-solid fa-university text-indigo-500"></i>
+        </div>
+        <div id="statUniversities" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
+    </div>
 
-                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
-                        <span>Universities</span>
-                        <i class="fa-solid fa-university text-indigo-500"></i>
-                    </div>
-                    <div id="statUniversities" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
-                </div>
+    <!-- Emails Sent -->
+    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+            <span>Emails Sent</span>
+            <i class="fa-solid fa-paper-plane text-sky-500"></i>
+        </div>
+        <div id="statSent" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
+    </div>
 
-                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
-                        <span>Emails Sent</span>
-                        <i class="fa-solid fa-paper-plane text-sky-500"></i>
-                    </div>
-                    <div id="statSent" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
-                </div>
+    <!-- Send Date Input Card -->
+    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+            <span>Send Date</span>
+            <i class="fa-solid fa-calendar-days text-teal-500"></i>
+        </div>
+        <input type="date" id="schDeadline" class="w-full mt-1 bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-1 text-sm font-semibold text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-teal-500">
+    </div>
 
-                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
-                        <span>Openings</span>
-                        <i class="fa-solid fa-door-open text-emerald-500"></i>
-                    </div>
-                    <div id="statOpenings" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">0</div>
-                </div>
+    <!-- Openings -->
+    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+            <span>Openings</span>
+            <i class="fa-solid fa-door-open text-emerald-500"></i>
+        </div>
+        <div id="statOpenings" class="text-2xl font-bold text-emerald-600 dark:text-emerald-400">0</div>
+    </div>
 
-                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
-                        <span>Replies</span>
-                        <i class="fa-solid fa-reply text-purple-500"></i>
-                    </div>
-                    <div id="statReplies" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
-                </div>
+    <!-- Replies -->
+    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+            <span>Replies</span>
+            <i class="fa-solid fa-reply text-purple-500"></i>
+        </div>
+        <div id="statReplies" class="text-2xl font-bold text-slate-900 dark:text-white">0</div>
+    </div>
 
-                <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
-                    <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
-                        <span>Response Rate</span>
-                        <i class="fa-solid fa-chart-line text-amber-500"></i>
-                    </div>
-                    <div id="statResponseRate" class="text-2xl font-bold text-amber-600 dark:text-amber-400">0%</div>
-                </div>
-            </div>
+    <!-- Response Rate -->
+    <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="flex items-center justify-between text-slate-500 dark:text-slate-400 text-xs font-medium mb-1">
+            <span>Response Rate</span>
+            <i class="fa-solid fa-chart-line text-amber-500"></i>
+        </div>
+        <div id="statResponseRate" class="text-2xl font-bold text-amber-600 dark:text-amber-400">0%</div>
+    </div>
+</div>
 
             <!-- Controls & Filters Section -->
             <div class="bg-white dark:bg-slate-900 p-4 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
