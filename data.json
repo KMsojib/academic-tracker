@@ -1,5 +1,19 @@
 {
   "professors": [],
   "universities": [],
-  "scholarships": []
+  "scholarships": [
+    {
+      "id": "sch-1787467061078",
+      "name": "Erasmus Mundus Joint Master Programme in Imaging",
+      "country": "EMJM (Europe)",
+      "coverage": "Fully Funded",
+      "cgpa": "3.5",
+      "ielts": "6.5",
+      "lor": "1",
+      "deadline": "2026-11-17",
+      "stipend": "1400",
+      "link": "https://www.emjm-imaging.eu/",
+      "notes": "*** Tow State of Application:\n\t1. First stage applications are shortlisted after an eligibility check by partner university.  Shortlisted applicants also need to apply to Politecnico di Milano to ensure POLIMI admission. \nOnly Required to Shortlisted Applicants.\nWill be notified by mid-February(prv.year.they.do) with all instructions.\nApplicants of the first application round will receive the final selection results by April 2026.\n\t2. Second stage : Shortlisted candidates will be invited for an online interview, preliminary in mid-March.\n\nRequirement:\nBachelor's Degree : \n30 ECTS Math \n90 ETC CS Course\nIELTS : 6.0\nCV - 2 Page\nMotivation Letter - 2000 Characters - PDF\nScanned Copy of Original Bachelor's Degree Certificate\nScanned Copy of Original Bachelor's Transcript.\nOne Recommendation Letter - PDF\nCopy of Passport\nSelection Criteria:\nAcademic Excellence and CV\nMotivation Letter\nRecommendation Letter's"
+    }
+  ]
 }
