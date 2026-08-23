@@ -244,6 +244,19 @@
   "universities": [],
   "scholarships": [
     {
+      "id": "sch-1787479126593",
+      "name": "Erasmus Mundus Joint Master in Artificial Intelligence",
+      "country": "EMJM (Europe)",
+      "coverage": "Fully Funded",
+      "cgpa": "3.5 / 180",
+      "ielts": "6.5",
+      "lor": "2",
+      "deadline": "",
+      "stipend": "1400",
+      "link": "",
+      "notes": "Application Open: November ( Didn’t Open Yet)\nApplication End : December ( Didn't Decleared yet)\n\n**** Academic Requirements:\n* At least 180 ECTS completed.\n**** Mathematical Course:   12 ECTS credit points in the following topics: calculus, linear algebra, logic, discrete mathematics, combinatorics, probability and statistics, information theory, graph theory, and number theory; \n**** Programming courses, min. 12 ECTS credit points in the following topics: programming paradigms, algorithms, and data structures; \n**** Computer Science : 12 ECTS credit points in the following topics: cryptography, security, computer networks, computer hardware, theoretical computer science \n\n**** Mandatory Documents:\nPassport\nBachelor’s Degree.\nAcademic Transcript.\nCV - 2 Pages. - Longer CV will be automatically rejected.\nA letter or Motivation:\nInterest in Following Master’s.\n600-800 Word’s\nLonger Motivation Letters will be automatically rejected.\n**** **** One-Minute Video Introducing:**** **** \nYourself\nBackground\nHow to Contribute to the EMAI program.\nAttach a Word/Pdf file with a link to my video.\nPosted on YouTUBe, Drive or Vimeo.\nOnly 30 mb.\nLonger Video will be automatically rejected.\n**** Two Letter of Recommandation\n**** English Language Test:\n**** IELTS - 6.5 Overall ( both test L-R-W-S - Must 6.5)\n**** Optional Documents:\nProfessional Experience in any field.\nResearch Experience\nAdditional Academic training in areas related to the EMAI.\nProfession Experiences."
+    },
+    {
       "id": "sch-1787479030905",
       "name": "Image Processing and Computer Vision",
       "country": "EMJM (Europe)",
