@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478302801",
+      "name": "Dr. Shangqian Gao",
+      "university": "Florida State University",
+      "email": "sgao@fsu.edu",
+      "department": "Computer Science",
+      "interests": "LLM, Self-improvement and alignment for LLMs, Efficient vision, NAS, image to text generation models, diffusion model, and GANs. Deep Neural Networks,",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://gaosh.github.io/",
+      "recentPaper": "Not All Prompts Are Made Equal: Prompt-based Pruning of Text-to-Image Diffusion Models",
+      "notes": "This paper proposes an adaptive pruning framework for text-to-image diffusion models that improves inference efficiency without significantly compromising image generation quality. Unlike conventional pruning methods that use a fixed compression strategy, the proposed approach dynamically adjusts the model capacity according to the complexity of the input prompt. By allocating computational resources more efficiently, the method reduces inference cost while preserving the quality of generated images. Experimental results demonstrate that the approach achieves a better balance between efficiency and performance across prompts of varying complexity.",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478250993",
       "name": "Hossein Kashiani",
       "university": "Utah State University",
