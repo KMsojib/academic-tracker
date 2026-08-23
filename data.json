@@ -244,6 +244,19 @@
   "universities": [],
   "scholarships": [
     {
+      "id": "sch-1787479171921",
+      "name": "MASTER OF SCIENCE IN COMMUNICATIONS ENGINEERING AND DATA SCIENCE",
+      "country": "EMJM (Europe)",
+      "coverage": "Fully Funded",
+      "cgpa": "3.5 / 180",
+      "ielts": "6.5",
+      "lor": "2",
+      "deadline": "2027-01-05",
+      "stipend": "1400",
+      "link": "https://www.unite-codas-master.eu/",
+      "notes": "Application Open: 1’st December 2026\nApplication End: 5 January 2027\nAdmission Result Published: End of March 2027\n\n\nMotivational video:\nInclude:\nWhy are you applying?\nWhy would you be a good candidate?\nDuration - 1 Minute\nSize : 100MB\nSubmitted by link - must be accessible and not protected.\n\nGeneral Eligibility:\nBachelor’s degree - 180 ECTS credits.\nScanned Colour copy of the Original BSc degree certificate\nScanned color copy of the Original Transcript of study.\nPassport\nEnglish language: Overall 6.5 and Writing Score 6.0\nLink of Motivational VIdeo:\nMotivation Letter: \nShould be written in English and Max Length - 500 words.\nWritten Directly on the Application form. \nWhy are you applying? Why would you be a good candidate? Must include which university you will apply to.\nCV\nOne Recommendation Letter. - Pdf\n\nProof of Place of Residency: if selected then\nBe issued within 12 months.\nName, current country and city of residence\n\nSelectionCriteria:\nRelevance of Previous studies.\nAcademic performance\nRecognition and quality of institution\nSuitability\nOther areas of Competence."
+    },
+    {
       "id": "sch-1787479126593",
       "name": "Erasmus Mundus Joint Master in Artificial Intelligence",
       "country": "EMJM (Europe)",
