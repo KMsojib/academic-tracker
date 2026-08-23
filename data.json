@@ -1,5 +1,22 @@
 {
-  "professors": [],
+  "professors": [
+    {
+      "id": "prof-1787467361061",
+      "name": "Junzhou Huang, FAIMBE",
+      "university": "The University of Texas at Arlington",
+      "email": "jzhuang@uta.edu",
+      "department": "Computer Science",
+      "interests": "Medical Imaging, Image Reconstruction, 3D Imaing",
+      "intake": "Fall 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Not Sent Yet",
+      "profileViewed": "No",
+      "website": "https://ranger.uta.edu/~huang/index.html",
+      "recentPaper": "multiple-anatomy collaborative learning for undersampled MRI reconstruction",
+      "notes": "",
+      "dateSent": ""
+    }
+  ],
   "universities": [],
   "scholarships": [
     {
