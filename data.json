@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478362241",
+      "name": "Dr. Shahid Khan Mohammed",
+      "university": "University of North Carolina Charlotte",
+      "email": "smoham30@charlotte.edu",
+      "department": "Computer Science",
+      "interests": "Medical Image Reconstruction, Computation Modeling",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://coefs.charlotte.edu/smoham30/",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478302801",
       "name": "Dr. Shangqian Gao",
       "university": "Florida State University",
