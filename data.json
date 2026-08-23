@@ -1,6 +1,22 @@
 {
   "professors": [
     {
+      "id": "prof-1787478082553",
+      "name": "Gen Li",
+      "university": "University of Houston",
+      "email": "gli25@Central.UH.EDU",
+      "department": "Computer Science",
+      "interests": "",
+      "intake": "Spring 2026",
+      "hasOpening": "Yes",
+      "responseStatus": "Mail Sent",
+      "profileViewed": "Yes",
+      "website": "https://coulsonlee.github.io/",
+      "recentPaper": "",
+      "notes": "",
+      "dateSent": ""
+    },
+    {
       "id": "prof-1787478030098",
       "name": "Prof. Amiri Golilarz",
       "university": "The University of Alabama",
